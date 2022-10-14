@@ -1,7 +1,6 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
- * Copyright (C) 2015 The CyanogenMod Project
- * Copyright (C) 2017 The LineageOS Project
+ * Copyright (C) 2022 The Portal Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -303,8 +302,8 @@ import com.android.server.wm.ActivityTaskManagerInternal;
 import com.android.server.wm.BackgroundActivityStartCallback;
 import com.android.server.wm.WindowManagerInternal;
 
-import org.lineageos.internal.notification.LedValues;
-import org.lineageos.internal.notification.LineageNotificationLights;
+import org.portalrom.internal.notification.LedValues;
+import org.portalrom.internal.notification.PortalRomNotificationLights;
 
 import libcore.io.IoUtils;
 
@@ -625,7 +624,7 @@ public class NotificationManagerService extends SystemService {
     private InstanceIdSequence mNotificationInstanceIdSequence;
     private Set<String> mMsgPkgsAllowedAsConvos = new HashSet();
 
-    private LineageNotificationLights mLineageNotificationLights;
+    private PortalRomNotificationLights mPortalRomNotificationLights;
 
     static class Archive {
         final SparseArray<Boolean> mEnabled;
@@ -1551,7 +1550,7 @@ public class NotificationManagerService extends SystemService {
     private void clearLightsLocked() {
         // light
         // clear only if lockscreen is not active
-        if (!mLineageNotificationLights.isKeyguardLocked()) {
+        if (!mPortalRomNotificationLights.isKeyguardLocked()) {
             mLights.clear();
             updateLightsLocked();
         }
@@ -1761,7 +1760,7 @@ public class NotificationManagerService extends SystemService {
                 // turn off LED when user passes through lock screen
                 if (mNotificationLight != null) {
                     // if lights with screen on is disabled.
-                    if (!mLineageNotificationLights.showLightsScreenOn()) {
+                    if (!mPortalRomNotificationLights.showLightsScreenOn()) {
                         mNotificationLight.turnOff();
                     }
                 }
@@ -2196,7 +2195,7 @@ public class NotificationManagerService extends SystemService {
                             new Intent(ACTION_INTERRUPTION_FILTER_CHANGED_INTERNAL)
                                     .addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY_BEFORE_BOOT),
                             UserHandle.ALL, permission.MANAGE_NOTIFICATIONS);
-                    mLineageNotificationLights.setZenMode(mZenModeHelper.getZenMode());
+                    mPortalRomNotificationLights.setZenMode(mZenModeHelper.getZenMode());
                     synchronized (mNotificationLock) {
                         updateInterruptionFilterLocked();
                     }
@@ -2446,8 +2445,8 @@ public class NotificationManagerService extends SystemService {
                 LocalServices.getService(ActivityManagerInternal.class),
                 createToastRateLimiter());
 
-        mLineageNotificationLights = new LineageNotificationLights(getContext(),
-                 new LineageNotificationLights.LedUpdater() {
+        mPortalRomNotificationLights = new PortalRomNotificationLights(getContext(),
+                 new PortalRomNotificationLights.LedUpdater() {
             public void update() {
                 updateNotificationPulse();
             }
@@ -7572,7 +7571,7 @@ public class NotificationManagerService extends SystemService {
             return false;
         }
         // Forced on
-        // Used by LineageParts light picker
+        // Used by PortalRomParts light picker
         // eg to allow selecting battery light color when notification led is turned off.
         if (isLedForcedOn(record)) {
             return true;
@@ -9043,21 +9042,21 @@ public class NotificationManagerService extends SystemService {
 
         NotificationRecord.Light light = ledNotification != null ?
                 ledNotification.getLight() : null;
-        if (ledNotification == null || mLineageNotificationLights == null || light == null) {
+        if (ledNotification == null || mPortalRomNotificationLights == null || light == null) {
             mNotificationLight.turnOff();
             return;
         }
 
         int ledColor = light.color;
         if (isLedForcedOn(ledNotification) && ledColor == 0) {
-            // User has requested color 0.  However, lineage-sdk interprets
+            // User has requested color 0.  However, portalrom-sdk interprets
             // color 0 as "supply a default" therefore adjust alpha to make
             // the color still black but non-zero.
             ledColor = 0x01000000;
         }
 
         LedValues ledValues = new LedValues(ledColor, light.onMs, light.offMs);
-        mLineageNotificationLights.calcLights(ledValues, ledNotification.getSbn().getPackageName(),
+        mPortalRomNotificationLights.calcLights(ledValues, ledNotification.getSbn().getPackageName(),
                 ledNotification.getSbn().getNotification(), mScreenOn || isInCall(),
                 ledNotification.getSuppressedVisualEffects());
 
@@ -9077,7 +9076,7 @@ public class NotificationManagerService extends SystemService {
     }
 
     private boolean isLedForcedOn(NotificationRecord nr) {
-        return nr != null && mLineageNotificationLights.isForcedOn(nr.getSbn().getNotification());
+        return nr != null && mPortalRomNotificationLights.isForcedOn(nr.getSbn().getNotification());
     }
 
     @GuardedBy("mNotificationLock")

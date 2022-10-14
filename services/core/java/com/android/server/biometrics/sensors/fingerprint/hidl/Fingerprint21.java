@@ -349,7 +349,7 @@ public class Fingerprint21 implements IHwBinder.DeathRecipient, ServiceProvider 
         });
 
         mCleanup = context.getResources().getBoolean(
-                org.lineageos.platform.internal.R.bool.config_cleanupUnusedFingerprints);
+                org.portalrom.platform.internal.R.bool.config_cleanupUnusedFingerprints);
 
         try {
             ActivityManager.getService().registerUserSwitchObserver(mUserSwitchObserver, TAG);

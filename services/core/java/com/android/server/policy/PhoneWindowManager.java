@@ -93,7 +93,7 @@ import static com.android.server.wm.WindowManagerPolicyProto.ROTATION_MODE;
 import static com.android.server.wm.WindowManagerPolicyProto.SCREEN_ON_FULLY;
 import static com.android.server.wm.WindowManagerPolicyProto.WINDOW_MANAGER_DRAW_COMPLETE;
 
-import static org.lineageos.internal.util.DeviceKeysConstants.*;
+import static org.portalrom.internal.util.DeviceKeysConstants.*;
 
 import android.annotation.Nullable;
 import android.app.ActivityManager;
@@ -234,11 +234,11 @@ import com.android.server.wm.WindowManagerService;
 
 import dalvik.system.PathClassLoader;
 
-import lineageos.hardware.LineageHardwareManager;
-import lineageos.providers.LineageSettings;
+import portalrom.hardware.PortalRomHardwareManager;
+import portalrom.providers.PortalRomSettings;
 
-import org.lineageos.internal.buttons.LineageButtons;
-import org.lineageos.internal.util.ActionUtils;
+import org.portalrom.internal.buttons.PortalRomButtons;
+import org.portalrom.internal.util.ActionUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -605,7 +605,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     DisplayPolicy mDefaultDisplayPolicy;
 
     // Behavior of HOME button during an incoming call.
-    // (See LineageSettings.Secure.RING_HOME_BUTTON_BEHAVIOR.)
+    // (See PortalRomSettings.Secure.RING_HOME_BUTTON_BEHAVIOR.)
     int mRingHomeBehavior;
 
     // Allowed theater mode wake actions
@@ -671,7 +671,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     private final List<DeviceKeyHandler> mDeviceKeyHandlers = new ArrayList<>();
 
-    private LineageButtons mLineageButtons;
+    private PortalRomButtons mPortalRomButtons;
 
     private static final int MSG_DISPATCH_MEDIA_KEY_WITH_WAKE_LOCK = 3;
     private static final int MSG_DISPATCH_MEDIA_KEY_REPEAT_WITH_WAKE_LOCK = 4;
@@ -692,7 +692,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private static final int MSG_LAUNCH_ASSIST = 23;
     private static final int MSG_RINGER_TOGGLE_CHORD = 24;
 
-    // Lineage additions
+    // PortalRom additions
     private static final int MSG_TOGGLE_TORCH = 100;
     private static final int MSG_CAMERA_LONG_PRESS = 101;
 
@@ -705,7 +705,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     private boolean mLongSwipeDown;
 
-    private LineageHardwareManager mLineageHardware;
+    private PortalRomHardwareManager mPortalRomHardware;
 
     private class PolicyHandler extends Handler {
         @Override
@@ -808,17 +808,17 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.INCALL_BACK_BUTTON_BEHAVIOR), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(LineageSettings.System.getUriFor(
-                    LineageSettings.System.CAMERA_WAKE_SCREEN), false, this,
+            resolver.registerContentObserver(PortalRomSettings.System.getUriFor(
+                    PortalRomSettings.System.CAMERA_WAKE_SCREEN), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(LineageSettings.System.getUriFor(
-                    LineageSettings.System.CAMERA_SLEEP_ON_RELEASE), false, this,
+            resolver.registerContentObserver(PortalRomSettings.System.getUriFor(
+                    PortalRomSettings.System.CAMERA_SLEEP_ON_RELEASE), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(LineageSettings.System.getUriFor(
-                    LineageSettings.System.CAMERA_LAUNCH), false, this,
+            resolver.registerContentObserver(PortalRomSettings.System.getUriFor(
+                    PortalRomSettings.System.CAMERA_LAUNCH), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(LineageSettings.Secure.getUriFor(
-                    LineageSettings.Secure.RING_HOME_BUTTON_BEHAVIOR), false, this,
+            resolver.registerContentObserver(PortalRomSettings.Secure.getUriFor(
+                    PortalRomSettings.Secure.RING_HOME_BUTTON_BEHAVIOR), false, this,
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.WAKE_GESTURE_ENABLED), false, this,
@@ -850,68 +850,68 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             resolver.registerContentObserver(Settings.Global.getUriFor(
                     Settings.Global.POWER_BUTTON_SUPPRESSION_DELAY_AFTER_GESTURE_WAKE), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(LineageSettings.System.getUriFor(
-                    LineageSettings.System.TORCH_LONG_PRESS_POWER_GESTURE), false, this,
+            resolver.registerContentObserver(PortalRomSettings.System.getUriFor(
+                    PortalRomSettings.System.TORCH_LONG_PRESS_POWER_GESTURE), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(LineageSettings.System.getUriFor(
-                    LineageSettings.System.TORCH_LONG_PRESS_POWER_TIMEOUT), false, this,
+            resolver.registerContentObserver(PortalRomSettings.System.getUriFor(
+                    PortalRomSettings.System.TORCH_LONG_PRESS_POWER_TIMEOUT), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(LineageSettings.System.getUriFor(
-                    LineageSettings.System.KEY_BACK_LONG_PRESS_ACTION), false, this,
+            resolver.registerContentObserver(PortalRomSettings.System.getUriFor(
+                    PortalRomSettings.System.KEY_BACK_LONG_PRESS_ACTION), false, this,
                     UserHandle.USER_ALL);
-           resolver.registerContentObserver(LineageSettings.System.getUriFor(
-                    LineageSettings.System.KEY_HOME_LONG_PRESS_ACTION), false, this,
+           resolver.registerContentObserver(PortalRomSettings.System.getUriFor(
+                    PortalRomSettings.System.KEY_HOME_LONG_PRESS_ACTION), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(LineageSettings.System.getUriFor(
-                    LineageSettings.System.KEY_HOME_DOUBLE_TAP_ACTION), false, this,
+            resolver.registerContentObserver(PortalRomSettings.System.getUriFor(
+                    PortalRomSettings.System.KEY_HOME_DOUBLE_TAP_ACTION), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(LineageSettings.System.getUriFor(
-                    LineageSettings.System.FORCE_SHOW_NAVBAR), false, this,
+            resolver.registerContentObserver(PortalRomSettings.System.getUriFor(
+                    PortalRomSettings.System.FORCE_SHOW_NAVBAR), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(LineageSettings.System.getUriFor(
-                    LineageSettings.System.KEY_MENU_ACTION), false, this,
+            resolver.registerContentObserver(PortalRomSettings.System.getUriFor(
+                    PortalRomSettings.System.KEY_MENU_ACTION), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(LineageSettings.System.getUriFor(
-                    LineageSettings.System.KEY_MENU_LONG_PRESS_ACTION), false, this,
+            resolver.registerContentObserver(PortalRomSettings.System.getUriFor(
+                    PortalRomSettings.System.KEY_MENU_LONG_PRESS_ACTION), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(LineageSettings.System.getUriFor(
-                    LineageSettings.System.KEY_ASSIST_ACTION), false, this,
+            resolver.registerContentObserver(PortalRomSettings.System.getUriFor(
+                    PortalRomSettings.System.KEY_ASSIST_ACTION), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(LineageSettings.System.getUriFor(
-                    LineageSettings.System.KEY_ASSIST_LONG_PRESS_ACTION), false, this,
+            resolver.registerContentObserver(PortalRomSettings.System.getUriFor(
+                    PortalRomSettings.System.KEY_ASSIST_LONG_PRESS_ACTION), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(LineageSettings.System.getUriFor(
-                    LineageSettings.System.KEY_APP_SWITCH_ACTION), false, this,
+            resolver.registerContentObserver(PortalRomSettings.System.getUriFor(
+                    PortalRomSettings.System.KEY_APP_SWITCH_ACTION), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(LineageSettings.System.getUriFor(
-                    LineageSettings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION), false, this,
+            resolver.registerContentObserver(PortalRomSettings.System.getUriFor(
+                    PortalRomSettings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(LineageSettings.System.getUriFor(
-                    LineageSettings.System.KEY_EDGE_LONG_SWIPE_ACTION), false, this,
+            resolver.registerContentObserver(PortalRomSettings.System.getUriFor(
+                    PortalRomSettings.System.KEY_EDGE_LONG_SWIPE_ACTION), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(LineageSettings.System.getUriFor(
-                    LineageSettings.System.HOME_WAKE_SCREEN), false, this,
+            resolver.registerContentObserver(PortalRomSettings.System.getUriFor(
+                    PortalRomSettings.System.HOME_WAKE_SCREEN), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(LineageSettings.System.getUriFor(
-                    LineageSettings.System.BACK_WAKE_SCREEN), false, this,
+            resolver.registerContentObserver(PortalRomSettings.System.getUriFor(
+                    PortalRomSettings.System.BACK_WAKE_SCREEN), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(LineageSettings.System.getUriFor(
-                    LineageSettings.System.MENU_WAKE_SCREEN), false, this,
+            resolver.registerContentObserver(PortalRomSettings.System.getUriFor(
+                    PortalRomSettings.System.MENU_WAKE_SCREEN), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(LineageSettings.System.getUriFor(
-                    LineageSettings.System.ASSIST_WAKE_SCREEN), false, this,
+            resolver.registerContentObserver(PortalRomSettings.System.getUriFor(
+                    PortalRomSettings.System.ASSIST_WAKE_SCREEN), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(LineageSettings.System.getUriFor(
-                    LineageSettings.System.APP_SWITCH_WAKE_SCREEN), false, this,
+            resolver.registerContentObserver(PortalRomSettings.System.getUriFor(
+                    PortalRomSettings.System.APP_SWITCH_WAKE_SCREEN), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(LineageSettings.System.getUriFor(
-                    LineageSettings.System.VOLUME_WAKE_SCREEN), false, this,
+            resolver.registerContentObserver(PortalRomSettings.System.getUriFor(
+                    PortalRomSettings.System.VOLUME_WAKE_SCREEN), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(LineageSettings.System.getUriFor(
-                    LineageSettings.System.VOLUME_ANSWER_CALL), false, this,
+            resolver.registerContentObserver(PortalRomSettings.System.getUriFor(
+                    PortalRomSettings.System.VOLUME_ANSWER_CALL), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(LineageSettings.System.getUriFor(
-                    LineageSettings.System.CLICK_PARTIAL_SCREENSHOT), false, this,
+            resolver.registerContentObserver(PortalRomSettings.System.getUriFor(
+                    PortalRomSettings.System.CLICK_PARTIAL_SCREENSHOT), false, this,
                     UserHandle.USER_ALL);
 
             updateSettings();
@@ -1662,7 +1662,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     private void launchCameraAction() {
         sendCloseSystemWindows();
-        Intent intent = new Intent(lineageos.content.Intent.ACTION_SCREEN_CAMERA_GESTURE);
+        Intent intent = new Intent(portalrom.content.Intent.ACTION_SCREEN_CAMERA_GESTURE);
         mContext.sendBroadcast(intent, android.Manifest.permission.STATUS_BAR_SERVICE);
     }
 
@@ -1772,7 +1772,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
 
                 if ((mRingHomeBehavior
-                        & LineageSettings.Secure.RING_HOME_BUTTON_BEHAVIOR_ANSWER) != 0) {
+                        & PortalRomSettings.Secure.RING_HOME_BUTTON_BEHAVIOR_ANSWER) != 0) {
                     final TelecomManager telecomManager = getTelecommService();
                     if (telecomManager != null && telecomManager.isRinging()) {
                         telecomManager.acceptRingingCall();
@@ -1938,7 +1938,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mWakeGestureListener = new MyWakeGestureListener(mContext, mHandler);
         mSettingsObserver = new SettingsObserver(mHandler);
 
-        // Lineage additions
+        // PortalRom additions
         mAlarmManager = mContext.getSystemService(AlarmManager.class);
         mCameraManager = (CameraManager) mContext.getSystemService(Context.CAMERA_SERVICE);
         mCameraManager.registerTorchCallback(new TorchModeCallback(), mHandler);
@@ -2033,7 +2033,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 com.android.internal.R.integer.config_wakeUpToLastStateTimeoutMillis);
 
         mDeviceHardwareKeys = mContext.getResources().getInteger(
-                org.lineageos.platform.internal.R.integer.config_deviceHardwareKeys);
+                org.portalrom.platform.internal.R.integer.config_deviceHardwareKeys);
 
         updateKeyAssignments();
 
@@ -2125,9 +2125,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mSideFpsEventHandler = new SideFpsEventHandler(mContext, mHandler, mPowerManager);
 
         final String[] deviceKeyHandlerLibs = res.getStringArray(
-                org.lineageos.platform.internal.R.array.config_deviceKeyHandlerLibs);
+                org.portalrom.platform.internal.R.array.config_deviceKeyHandlerLibs);
         final String[] deviceKeyHandlerClasses = res.getStringArray(
-                org.lineageos.platform.internal.R.array.config_deviceKeyHandlerClasses);
+                org.portalrom.platform.internal.R.array.config_deviceKeyHandlerClasses);
 
         for (int i = 0;
                 i < deviceKeyHandlerLibs.length && i < deviceKeyHandlerClasses.length; i++) {
@@ -2385,7 +2385,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mMenuPressAction = Action.MENU;
 
         mMenuLongPressAction = Action.fromIntSafe(res.getInteger(
-                org.lineageos.platform.internal.R.integer.config_longPressOnMenuBehavior));
+                org.portalrom.platform.internal.R.integer.config_longPressOnMenuBehavior));
 
         if (mMenuLongPressAction == Action.NOTHING &&
                (hasMenu && !hasAssist)) {
@@ -2395,66 +2395,66 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mAssistLongPressAction = Action.VOICE_SEARCH;
         mAppSwitchPressAction = Action.APP_SWITCH;
         mAppSwitchLongPressAction = Action.fromIntSafe(res.getInteger(
-                org.lineageos.platform.internal.R.integer.config_longPressOnAppSwitchBehavior));
+                org.portalrom.platform.internal.R.integer.config_longPressOnAppSwitchBehavior));
 
         mEdgeLongSwipeAction = Action.NOTHING;
 
         mBackLongPressAction = Action.fromIntSafe(res.getInteger(
-                org.lineageos.platform.internal.R.integer.config_longPressOnBackBehavior));
+                org.portalrom.platform.internal.R.integer.config_longPressOnBackBehavior));
         if (mBackLongPressAction.ordinal() > Action.SLEEP.ordinal()) {
             mBackLongPressAction = Action.NOTHING;
         }
 
         mBackLongPressAction = Action.fromSettings(resolver,
-                LineageSettings.System.KEY_BACK_LONG_PRESS_ACTION,
+                PortalRomSettings.System.KEY_BACK_LONG_PRESS_ACTION,
                 mBackLongPressAction);
 
         mHomeLongPressAction = Action.fromIntSafe(res.getInteger(
-                org.lineageos.platform.internal.R.integer.config_longPressOnHomeBehavior));
+                org.portalrom.platform.internal.R.integer.config_longPressOnHomeBehavior));
         if (mHomeLongPressAction.ordinal() > Action.SLEEP.ordinal()) {
             mHomeLongPressAction = Action.NOTHING;
         }
 
         mHomeDoubleTapAction = Action.fromIntSafe(res.getInteger(
-                org.lineageos.platform.internal.R.integer.config_doubleTapOnHomeBehavior));
+                org.portalrom.platform.internal.R.integer.config_doubleTapOnHomeBehavior));
         if (mHomeDoubleTapAction.ordinal() > Action.SLEEP.ordinal()) {
             mHomeDoubleTapAction = Action.NOTHING;
         }
 
         mHomeLongPressAction = Action.fromSettings(resolver,
-                LineageSettings.System.KEY_HOME_LONG_PRESS_ACTION,
+                PortalRomSettings.System.KEY_HOME_LONG_PRESS_ACTION,
                 mHomeLongPressAction);
         mHomeDoubleTapAction = Action.fromSettings(resolver,
-                LineageSettings.System.KEY_HOME_DOUBLE_TAP_ACTION,
+                PortalRomSettings.System.KEY_HOME_DOUBLE_TAP_ACTION,
                 mHomeDoubleTapAction);
 
         if (hasMenu) {
             mMenuPressAction = Action.fromSettings(resolver,
-                    LineageSettings.System.KEY_MENU_ACTION,
+                    PortalRomSettings.System.KEY_MENU_ACTION,
                     mMenuPressAction);
             mMenuLongPressAction = Action.fromSettings(resolver,
-                    LineageSettings.System.KEY_MENU_LONG_PRESS_ACTION,
+                    PortalRomSettings.System.KEY_MENU_LONG_PRESS_ACTION,
                     mMenuLongPressAction);
         }
         if (hasAssist) {
             mAssistPressAction = Action.fromSettings(resolver,
-                    LineageSettings.System.KEY_ASSIST_ACTION,
+                    PortalRomSettings.System.KEY_ASSIST_ACTION,
                     mAssistPressAction);
             mAssistLongPressAction = Action.fromSettings(resolver,
-                    LineageSettings.System.KEY_ASSIST_LONG_PRESS_ACTION,
+                    PortalRomSettings.System.KEY_ASSIST_LONG_PRESS_ACTION,
                     mAssistLongPressAction);
         }
         if (hasAppSwitch) {
             mAppSwitchPressAction = Action.fromSettings(resolver,
-                    LineageSettings.System.KEY_APP_SWITCH_ACTION,
+                    PortalRomSettings.System.KEY_APP_SWITCH_ACTION,
                     mAppSwitchPressAction);
         }
         mAppSwitchLongPressAction = Action.fromSettings(resolver,
-                LineageSettings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION,
+                PortalRomSettings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION,
                 mAppSwitchLongPressAction);
 
         mEdgeLongSwipeAction = Action.fromSettings(resolver,
-                LineageSettings.System.KEY_EDGE_LONG_SWIPE_ACTION,
+                PortalRomSettings.System.KEY_EDGE_LONG_SWIPE_ACTION,
                 mEdgeLongSwipeAction);
 
         mShortPressOnWindowBehavior = SHORT_PRESS_WINDOW_NOTHING;
@@ -2467,7 +2467,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         ContentResolver resolver = mContext.getContentResolver();
         boolean updateRotation = false;
         int mDeviceHardwareWakeKeys = mContext.getResources().getInteger(
-                org.lineageos.platform.internal.R.integer.config_deviceHardwareWakeKeys);
+                org.portalrom.platform.internal.R.integer.config_deviceHardwareWakeKeys);
         synchronized (mLock) {
             mEndcallBehavior = Settings.System.getIntForUser(resolver,
                     Settings.System.END_BUTTON_BEHAVIOR,
@@ -2481,9 +2481,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     Settings.Secure.INCALL_BACK_BUTTON_BEHAVIOR,
                     Settings.Secure.INCALL_BACK_BUTTON_BEHAVIOR_DEFAULT,
                     UserHandle.USER_CURRENT);
-            mRingHomeBehavior = LineageSettings.Secure.getIntForUser(resolver,
-                    LineageSettings.Secure.RING_HOME_BUTTON_BEHAVIOR,
-                    LineageSettings.Secure.RING_HOME_BUTTON_BEHAVIOR_DEFAULT,
+            mRingHomeBehavior = PortalRomSettings.Secure.getIntForUser(resolver,
+                    PortalRomSettings.Secure.RING_HOME_BUTTON_BEHAVIOR,
+                    PortalRomSettings.Secure.RING_HOME_BUTTON_BEHAVIOR_DEFAULT,
                     UserHandle.USER_CURRENT);
             mSystemNavigationKeysEnabled = Settings.Secure.getIntForUser(resolver,
                     Settings.Secure.SYSTEM_NAVIGATION_KEYS_ENABLED,
@@ -2499,45 +2499,45 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 mRingerToggleChord = Settings.Secure.VOLUME_HUSH_OFF;
             }
 
-            mTorchLongPressPowerEnabled = LineageSettings.System.getIntForUser(
-                    resolver, LineageSettings.System.TORCH_LONG_PRESS_POWER_GESTURE, 0,
+            mTorchLongPressPowerEnabled = PortalRomSettings.System.getIntForUser(
+                    resolver, PortalRomSettings.System.TORCH_LONG_PRESS_POWER_GESTURE, 0,
                     UserHandle.USER_CURRENT) == 1;
-            mTorchTimeout = LineageSettings.System.getIntForUser(
-                    resolver, LineageSettings.System.TORCH_LONG_PRESS_POWER_TIMEOUT, 0,
+            mTorchTimeout = PortalRomSettings.System.getIntForUser(
+                    resolver, PortalRomSettings.System.TORCH_LONG_PRESS_POWER_TIMEOUT, 0,
                     UserHandle.USER_CURRENT);
-            mWakeOnHomeKeyPress = (LineageSettings.System.getIntForUser(resolver,
-                    LineageSettings.System.HOME_WAKE_SCREEN, 1, UserHandle.USER_CURRENT) == 1)
+            mWakeOnHomeKeyPress = (PortalRomSettings.System.getIntForUser(resolver,
+                    PortalRomSettings.System.HOME_WAKE_SCREEN, 1, UserHandle.USER_CURRENT) == 1)
                     && ((mDeviceHardwareWakeKeys & KEY_MASK_HOME) != 0);
-            mWakeOnBackKeyPress = (LineageSettings.System.getIntForUser(resolver,
-                    LineageSettings.System.BACK_WAKE_SCREEN, 0, UserHandle.USER_CURRENT) == 1)
+            mWakeOnBackKeyPress = (PortalRomSettings.System.getIntForUser(resolver,
+                    PortalRomSettings.System.BACK_WAKE_SCREEN, 0, UserHandle.USER_CURRENT) == 1)
                     && ((mDeviceHardwareWakeKeys & KEY_MASK_BACK) != 0);
-            mWakeOnMenuKeyPress = (LineageSettings.System.getIntForUser(resolver,
-                    LineageSettings.System.MENU_WAKE_SCREEN, 0, UserHandle.USER_CURRENT) == 1)
+            mWakeOnMenuKeyPress = (PortalRomSettings.System.getIntForUser(resolver,
+                    PortalRomSettings.System.MENU_WAKE_SCREEN, 0, UserHandle.USER_CURRENT) == 1)
                     && ((mDeviceHardwareWakeKeys & KEY_MASK_MENU) != 0);
-            mWakeOnAssistKeyPress = (LineageSettings.System.getIntForUser(resolver,
-                    LineageSettings.System.ASSIST_WAKE_SCREEN, 0, UserHandle.USER_CURRENT) == 1)
+            mWakeOnAssistKeyPress = (PortalRomSettings.System.getIntForUser(resolver,
+                    PortalRomSettings.System.ASSIST_WAKE_SCREEN, 0, UserHandle.USER_CURRENT) == 1)
                     && ((mDeviceHardwareWakeKeys & KEY_MASK_ASSIST) != 0);
-            mWakeOnAppSwitchKeyPress = (LineageSettings.System.getIntForUser(resolver,
-                    LineageSettings.System.APP_SWITCH_WAKE_SCREEN, 0, UserHandle.USER_CURRENT) == 1)
+            mWakeOnAppSwitchKeyPress = (PortalRomSettings.System.getIntForUser(resolver,
+                    PortalRomSettings.System.APP_SWITCH_WAKE_SCREEN, 0, UserHandle.USER_CURRENT) == 1)
                     && ((mDeviceHardwareWakeKeys & KEY_MASK_APP_SWITCH) != 0);
-            mWakeOnVolumeKeyPress = (LineageSettings.System.getIntForUser(resolver,
-                    LineageSettings.System.VOLUME_WAKE_SCREEN, 0, UserHandle.USER_CURRENT) == 1)
+            mWakeOnVolumeKeyPress = (PortalRomSettings.System.getIntForUser(resolver,
+                    PortalRomSettings.System.VOLUME_WAKE_SCREEN, 0, UserHandle.USER_CURRENT) == 1)
                     && ((mDeviceHardwareWakeKeys & KEY_MASK_VOLUME) != 0);
-            mVolumeAnswerCall = (LineageSettings.System.getIntForUser(resolver,
-                    LineageSettings.System.VOLUME_ANSWER_CALL, 0, UserHandle.USER_CURRENT) == 1)
+            mVolumeAnswerCall = (PortalRomSettings.System.getIntForUser(resolver,
+                    PortalRomSettings.System.VOLUME_ANSWER_CALL, 0, UserHandle.USER_CURRENT) == 1)
                     && ((mDeviceHardwareWakeKeys & KEY_MASK_VOLUME) != 0);
-            mWakeOnCameraKeyPress = (LineageSettings.System.getIntForUser(resolver,
-                    LineageSettings.System.CAMERA_WAKE_SCREEN, 0, UserHandle.USER_CURRENT) == 1)
+            mWakeOnCameraKeyPress = (PortalRomSettings.System.getIntForUser(resolver,
+                    PortalRomSettings.System.CAMERA_WAKE_SCREEN, 0, UserHandle.USER_CURRENT) == 1)
                     && ((mDeviceHardwareWakeKeys & KEY_MASK_CAMERA) != 0);
             mCameraSleepOnRelease = mWakeOnCameraKeyPress &&
-                    LineageSettings.System.getIntForUser(resolver,
-                            LineageSettings.System.CAMERA_SLEEP_ON_RELEASE, 0,
+                    PortalRomSettings.System.getIntForUser(resolver,
+                            PortalRomSettings.System.CAMERA_SLEEP_ON_RELEASE, 0,
                             UserHandle.USER_CURRENT) == 1;
-            mCameraLaunch = LineageSettings.System.getIntForUser(resolver,
-                    LineageSettings.System.CAMERA_LAUNCH, 0,
+            mCameraLaunch = PortalRomSettings.System.getIntForUser(resolver,
+                    PortalRomSettings.System.CAMERA_LAUNCH, 0,
                     UserHandle.USER_CURRENT) == 1;
-            mClickPartialScreenshot = LineageSettings.System.getIntForUser(resolver,
-                    LineageSettings.System.CLICK_PARTIAL_SCREENSHOT, 0,
+            mClickPartialScreenshot = PortalRomSettings.System.getIntForUser(resolver,
+                    PortalRomSettings.System.CLICK_PARTIAL_SCREENSHOT, 0,
                     UserHandle.USER_CURRENT) == 1;
 
             // Configure wake gesture.
@@ -2549,13 +2549,13 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 updateWakeGestureListenerLp();
             }
 
-            int forceNavbar = LineageSettings.System.getIntForUser(resolver,
-                    LineageSettings.System.FORCE_SHOW_NAVBAR, 0,
+            int forceNavbar = PortalRomSettings.System.getIntForUser(resolver,
+                    PortalRomSettings.System.FORCE_SHOW_NAVBAR, 0,
                     UserHandle.USER_CURRENT);
             if (forceNavbar != mForceNavbar) {
                 mForceNavbar = forceNavbar;
-                if (mLineageHardware.isSupported(LineageHardwareManager.FEATURE_KEY_DISABLE)) {
-                    mLineageHardware.set(LineageHardwareManager.FEATURE_KEY_DISABLE,
+                if (mPortalRomHardware.isSupported(PortalRomHardwareManager.FEATURE_KEY_DISABLE)) {
+                    mPortalRomHardware.set(PortalRomHardwareManager.FEATURE_KEY_DISABLE,
                             mForceNavbar == 1);
                 }
             }
@@ -4201,7 +4201,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     // {@link interceptKeyBeforeDispatching()}.
                     result |= ACTION_PASS_TO_USER;
                 } else if ((result & ACTION_PASS_TO_USER) == 0 && !mWakeOnVolumeKeyPress) {
-                    if (mLineageButtons.handleVolumeKey(event, interactive)) {
+                    if (mPortalRomButtons.handleVolumeKey(event, interactive)) {
                         break;
                     }
 
@@ -5448,9 +5448,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             mVrManagerInternal.addPersistentVrModeStateListener(mPersistentVrModeListener);
         }
 
-        mLineageHardware = LineageHardwareManager.getInstance(mContext);
+        mPortalRomHardware = PortalRomHardwareManager.getInstance(mContext);
         // Ensure observe happens in systemReady() since we need
-        // LineageHardwareService to be up and running
+        // PortalRomHardwareService to be up and running
         mSettingsObserver.observe();
 
         readCameraLensCoverState();
@@ -5485,7 +5485,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 mKeyguardDelegate.onBootCompleted();
             }
         }
-        mLineageButtons = new LineageButtons(mContext);
+        mPortalRomButtons = new PortalRomButtons(mContext);
         mSideFpsEventHandler.onFingerprintSensorReady();
         startedWakingUp(PowerManager.WAKE_REASON_UNKNOWN);
         finishedWakingUp(PowerManager.WAKE_REASON_UNKNOWN);
@@ -5725,8 +5725,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private void sendLidChangeBroadcast() {
         final int lidState = mDefaultDisplayPolicy.getLidState();
         Log.d(TAG, "Sending cover change broadcast, lidState=" + lidState);
-        Intent intent = new Intent(lineageos.content.Intent.ACTION_LID_STATE_CHANGED);
-        intent.putExtra(lineageos.content.Intent.EXTRA_LID_STATE, lidState);
+        Intent intent = new Intent(portalrom.content.Intent.ACTION_LID_STATE_CHANGED);
+        intent.putExtra(portalrom.content.Intent.EXTRA_LID_STATE, lidState);
         intent.setFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING);
         mContext.sendBroadcastAsUser(intent, UserHandle.SYSTEM);
     }

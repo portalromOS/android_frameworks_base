@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 The LineageOS Project
+ * Copyright (C) 2022 The Portal Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,9 +42,9 @@ import com.android.systemui.qs.logging.QSLogger;
 import com.android.systemui.qs.tileimpl.QSTileImpl;
 import com.android.systemui.statusbar.policy.BatteryController;
 
-import org.lineageos.internal.logging.LineageMetricsLogger;
+import org.portalrom.internal.logging.PortalRomMetricsLogger;
 
-import vendor.lineage.powershare.V1_0.IPowerShare;
+import vendor.portalrom.powershare.V1_0.IPowerShare;
 
 import java.util.NoSuchElementException;
 
@@ -208,7 +208,7 @@ public class PowerShareTile extends QSTileImpl<BooleanState>
 
     @Override
     public int getMetricsCategory() {
-        return LineageMetricsLogger.TILE_POWERSHARE;
+        return PortalRomMetricsLogger.TILE_POWERSHARE;
     }
 
     @Override

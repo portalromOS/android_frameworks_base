@@ -140,7 +140,7 @@
             android:visibility="gone"
         />
 
-        <com.android.systemui.statusbar.LineageStatusBarItemHolder
+        <com.android.systemui.statusbar.PortalRomStatusBarItemHolder
             android:id="@+id/network_traffic_holder"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -148,14 +148,14 @@
             android:gravity="center"
             >
 
-            <org.lineageos.internal.statusbar.NetworkTraffic
+            <org.portalrom.internal.statusbar.NetworkTraffic
                 android:id="@+id/network_traffic"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:maxLines="2"
                 android:gravity="center" />
 
-        </com.android.systemui.statusbar.LineageStatusBarItemHolder>
+        </com.android.systemui.statusbar.PortalRomStatusBarItemHolder>
     </com.android.keyguard.AlphaOptimizedLinearLayout>
 
     <ViewStub

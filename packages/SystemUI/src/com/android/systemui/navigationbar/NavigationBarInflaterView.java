@@ -50,7 +50,7 @@ import com.android.systemui.recents.OverviewProxyService;
 import com.android.systemui.shared.system.QuickStepContract;
 import com.android.systemui.tuner.TunerService;
 
-import lineageos.providers.LineageSettings;
+import portalrom.providers.PortalRomSettings;
 
 import java.io.PrintWriter;
 import java.util.Objects;
@@ -93,9 +93,9 @@ public class NavigationBarInflaterView extends FrameLayout
     private static final String ABSOLUTE_VERTICAL_CENTERED_SUFFIX = "C";
 
     private static final String KEY_NAVIGATION_HINT =
-            "lineagesystem:" + LineageSettings.System.NAVIGATION_BAR_HINT;
+            "portalromsystem:" + PortalRomSettings.System.NAVIGATION_BAR_HINT;
     private static final String OVERLAY_NAVIGATION_HIDE_HINT =
-            "org.lineageos.overlay.customization.navbar.nohint";
+            "org.portalrom.overlay.customization.navbar.nohint";
 
     protected LayoutInflater mLayoutInflater;
     protected LayoutInflater mLandscapeInflater;

@@ -263,7 +263,7 @@ import com.android.server.statusbar.StatusBarManagerInternal;
 import com.android.server.uri.NeededUriGrants;
 import com.android.server.uri.UriGrantsManagerInternal;
 
-import org.lineageos.internal.applications.LineageActivityManager;
+import org.portalrom.internal.applications.PortalRomActivityManager;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -777,8 +777,8 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
 
     private int mDeviceOwnerUid = Process.INVALID_UID;
 
-    // Lineage sdk activity related helper
-    private LineageActivityManager mLineageActivityManager;
+    // PortalRom sdk activity related helper
+    private PortalRomActivityManager mPortalRomActivityManager;
 
     private final class SettingObserver extends ContentObserver {
         private final Uri mFontScaleUri = Settings.System.getUriFor(FONT_SCALE);
@@ -874,9 +874,9 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
     public void installSystemProviders() {
         mSettingsObserver = new SettingObserver();
 
-        // LineageActivityManager depends on settings so we can initialize only
+        // PortalRomActivityManager depends on settings so we can initialize only
         // after providers are available.
-        mLineageActivityManager = new LineageActivityManager(mContext);
+        mPortalRomActivityManager = new PortalRomActivityManager(mContext);
     }
 
     public void retrieveSettings(ContentResolver resolver) {
@@ -6659,6 +6659,6 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
     }
 
     public boolean shouldForceLongScreen(String packageName) {
-        return mLineageActivityManager.shouldForceLongScreen(packageName);
+        return mPortalRomActivityManager.shouldForceLongScreen(packageName);
     }
 }

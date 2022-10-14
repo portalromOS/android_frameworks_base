@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2018 The LineageOS project
+ * Copyright (C) 2022 The Portal project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,18 +28,18 @@ import com.android.systemui.plugins.DarkIconDispatcher;
 import com.android.systemui.plugins.DarkIconDispatcher.DarkReceiver;
 import com.android.systemui.R;
 
-import org.lineageos.internal.statusbar.LineageStatusBarItem;
+import org.portalrom.internal.statusbar.PortalRomStatusBarItem;
 
 import java.util.ArrayList;
 
-public class LineageStatusBarItemHolder extends RelativeLayout
-        implements LineageStatusBarItem.Manager {
-    private static final String TAG = "LineageStatusBarItemHolder";
+public class PortalRomStatusBarItemHolder extends RelativeLayout
+        implements PortalRomStatusBarItem.Manager {
+    private static final String TAG = "PortalRomStatusBarItemHolder";
 
-    private ArrayList<LineageStatusBarItem.DarkReceiver> mDarkReceivers =
-            new ArrayList<LineageStatusBarItem.DarkReceiver>();
-    private ArrayList<LineageStatusBarItem.VisibilityReceiver> mVisibilityReceivers =
-            new ArrayList<LineageStatusBarItem.VisibilityReceiver>();
+    private ArrayList<PortalRomStatusBarItem.DarkReceiver> mDarkReceivers =
+            new ArrayList<PortalRomStatusBarItem.DarkReceiver>();
+    private ArrayList<PortalRomStatusBarItem.VisibilityReceiver> mVisibilityReceivers =
+            new ArrayList<PortalRomStatusBarItem.VisibilityReceiver>();
 
     private Rect mLastArea;
     private float mLastDarkIntensity;
@@ -49,15 +49,15 @@ public class LineageStatusBarItemHolder extends RelativeLayout
 
     private Context mContext;
 
-    public LineageStatusBarItemHolder(Context context) {
+    public PortalRomStatusBarItemHolder(Context context) {
         this(context, null);
     }
 
-    public LineageStatusBarItemHolder(Context context, AttributeSet attrs) {
+    public PortalRomStatusBarItemHolder(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public LineageStatusBarItemHolder(Context context, AttributeSet attrs, int defStyle) {
+    public PortalRomStatusBarItemHolder(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mContext = context;
         mItemHolderIsVisible = false;
@@ -88,7 +88,7 @@ public class LineageStatusBarItemHolder extends RelativeLayout
             mLastArea = area;
             mLastDarkIntensity = darkIntensity;
             mLastTint = tint;
-            for (LineageStatusBarItem.DarkReceiver r : mDarkReceivers) {
+            for (PortalRomStatusBarItem.DarkReceiver r : mDarkReceivers) {
                 r.onDarkChanged(area, darkIntensity, tint);
             }
         }
@@ -127,14 +127,14 @@ public class LineageStatusBarItemHolder extends RelativeLayout
             return;
         }
         mItemHolderIsVisible = isVisible;
-        for (LineageStatusBarItem.VisibilityReceiver r : mVisibilityReceivers) {
+        for (PortalRomStatusBarItem.VisibilityReceiver r : mVisibilityReceivers) {
             r.onVisibilityChanged(mItemHolderIsVisible);
         }
     }
 
-    // LineageStatusBarItem.Manager methods
+    // PortalRomStatusBarItem.Manager methods
 
-    public void addDarkReceiver(LineageStatusBarItem.DarkReceiver darkReceiver) {
+    public void addDarkReceiver(PortalRomStatusBarItem.DarkReceiver darkReceiver) {
         darkReceiver.setFillColors(
                 mContext.getColor(R.color.dark_mode_icon_color_dual_tone_fill),
                 mContext.getColor(R.color.light_mode_icon_color_dual_tone_fill));
@@ -142,7 +142,7 @@ public class LineageStatusBarItemHolder extends RelativeLayout
         darkReceiver.onDarkChanged(mLastArea, mLastDarkIntensity, mLastTint);
     }
 
-    public void addVisibilityReceiver(LineageStatusBarItem.VisibilityReceiver visibilityReceiver) {
+    public void addVisibilityReceiver(PortalRomStatusBarItem.VisibilityReceiver visibilityReceiver) {
         mVisibilityReceivers.add(visibilityReceiver);
         visibilityReceiver.onVisibilityChanged(mItemHolderIsVisible);
     }

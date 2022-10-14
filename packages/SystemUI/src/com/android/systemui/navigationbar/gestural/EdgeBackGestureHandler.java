@@ -19,7 +19,7 @@ import static android.view.WindowManager.LayoutParams.PRIVATE_FLAG_EXCLUDE_FROM_
 
 import static com.android.systemui.classifier.Classifier.BACK_GESTURE;
 
-import static org.lineageos.internal.util.DeviceKeysConstants.Action;
+import static org.portalrom.internal.util.DeviceKeysConstants.Action;
 
 import android.app.ActivityManager;
 import android.content.ComponentName;
@@ -86,7 +86,7 @@ import com.android.systemui.tracing.nano.EdgeBackGestureHandlerProto;
 import com.android.systemui.tracing.nano.SystemUiTraceProto;
 import com.android.systemui.tuner.TunerService;
 
-import lineageos.providers.LineageSettings;
+import portalrom.providers.PortalRomSettings;
 
 import java.io.PrintWriter;
 import java.util.ArrayDeque;
@@ -109,7 +109,7 @@ public class EdgeBackGestureHandler extends CurrentUserTracker
             "gestures.back_timeout", 250);
 
     private static final String KEY_EDGE_LONG_SWIPE_ACTION =
-            "lineagesystem:" + LineageSettings.System.KEY_EDGE_LONG_SWIPE_ACTION;
+            "portalromsystem:" + PortalRomSettings.System.KEY_EDGE_LONG_SWIPE_ACTION;
 
     private static final int MAX_NUM_LOGGED_PREDICTIONS = 10;
     private static final int MAX_NUM_LOGGED_GESTURES = 10;

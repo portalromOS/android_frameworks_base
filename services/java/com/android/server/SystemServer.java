@@ -2533,9 +2533,9 @@ public final class SystemServer implements Dumpable {
         mSystemServiceManager.startService(TracingServiceProxy.class);
         t.traceEnd();
 
-        // Lineage Services
+        // PortalRom Services
         String externalServer = context.getResources().getString(
-                org.lineageos.platform.internal.R.string.config_externalSystemServer);
+                org.portalrom.platform.internal.R.string.config_externalSystemServer);
         final Class<?> serverClazz;
         try {
             serverClazz = Class.forName(externalServer);

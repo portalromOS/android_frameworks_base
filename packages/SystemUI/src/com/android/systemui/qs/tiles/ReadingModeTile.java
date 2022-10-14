@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2020 The LineageOS Project
+ * Copyright (C) 2022 The Portal Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,10 +38,10 @@ import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.logging.QSLogger;
 import com.android.systemui.qs.tileimpl.QSTileImpl;
 
-import org.lineageos.internal.util.PackageManagerUtils;
+import org.portalrom.internal.util.PackageManagerUtils;
 
-import lineageos.hardware.LineageHardwareManager;
-import lineageos.providers.LineageSettings;
+import portalrom.hardware.PortalRomHardwareManager;
+import portalrom.providers.PortalRomSettings;
 
 import javax.inject.Inject;
 
@@ -51,7 +51,7 @@ public class ReadingModeTile extends QSTileImpl<BooleanState> {
 
     private static final Intent DISPLAY_SETTINGS = new Intent("android.settings.DISPLAY_SETTINGS");
 
-    private LineageHardwareManager mHardware;
+    private PortalRomHardwareManager mHardware;
 
     @Inject
     public ReadingModeTile(
@@ -66,7 +66,7 @@ public class ReadingModeTile extends QSTileImpl<BooleanState> {
     ) {
         super(host, backgroundLooper, mainHandler, falsingManager, metricsLogger,
                 statusBarStateController, activityStarter, qsLogger);
-        mHardware = LineageHardwareManager.getInstance(mContext);
+        mHardware = PortalRomHardwareManager.getInstance(mContext);
     }
 
     @Override
@@ -77,7 +77,7 @@ public class ReadingModeTile extends QSTileImpl<BooleanState> {
     @Override
     protected void handleClick(@Nullable View view) {
         boolean newStatus = !isReadingModeEnabled();
-        mHardware.set(LineageHardwareManager.FEATURE_READING_ENHANCEMENT, newStatus);
+        mHardware.set(PortalRomHardwareManager.FEATURE_READING_ENHANCEMENT, newStatus);
         refreshState();
     }
 
@@ -88,7 +88,7 @@ public class ReadingModeTile extends QSTileImpl<BooleanState> {
 
     @Override
     public boolean isAvailable() {
-        return mHardware.isSupported(LineageHardwareManager.FEATURE_READING_ENHANCEMENT);
+        return mHardware.isSupported(PortalRomHardwareManager.FEATURE_READING_ENHANCEMENT);
     }
 
     @Override
@@ -134,6 +134,6 @@ public class ReadingModeTile extends QSTileImpl<BooleanState> {
     }
 
     private boolean isReadingModeEnabled() {
-        return mHardware.get(LineageHardwareManager.FEATURE_READING_ENHANCEMENT);
+        return mHardware.get(PortalRomHardwareManager.FEATURE_READING_ENHANCEMENT);
     }
 }

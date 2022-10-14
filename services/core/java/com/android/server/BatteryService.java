@@ -75,8 +75,8 @@ import com.android.server.am.BatteryStatsService;
 import com.android.server.lights.LightsManager;
 import com.android.server.lights.LogicalLight;
 
-import org.lineageos.internal.notification.LedValues;
-import org.lineageos.internal.notification.LineageBatteryLights;
+import org.portalrom.internal.notification.LedValues;
+import org.portalrom.internal.notification.PortalRomBatteryLights;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -209,7 +209,7 @@ public final class BatteryService extends SystemService {
 
     private MetricsLogger mMetricsLogger;
 
-    private LineageBatteryLights mLineageBatteryLights;
+    private PortalRomBatteryLights mPortalRomBatteryLights;
 
     private static final int MOD_TYPE_EMERGENCY = 3;
     private static final int MOD_TYPE_SUPPLEMENTAL = 2;
@@ -306,14 +306,14 @@ public final class BatteryService extends SystemService {
                 updateBatteryWarningLevelLocked();
             }
         } else if (phase == PHASE_BOOT_COMPLETED) {
-            mLineageBatteryLights = new LineageBatteryLights(mContext,
-                    new LineageBatteryLights.LedUpdater() {
+            mPortalRomBatteryLights = new PortalRomBatteryLights(mContext,
+                    new PortalRomBatteryLights.LedUpdater() {
                 public void update() {
                     updateLedPulse();
                 }
             });
 
-            // Update light state now that mLineageBatteryLights has been initialized.
+            // Update light state now that mPortalRomBatteryLights has been initialized.
             updateLedPulse();
         }
     }
@@ -1284,21 +1284,21 @@ public final class BatteryService extends SystemService {
                 Slog.w(TAG, "updateLightsLocked: mHealthInfo is null; skipping");
                 return;
             }
-            // mLineageBatteryLights is initialized during PHASE_BOOT_COMPLETED
-            // This means we don't have Lineage battery settings yet so skip.
-            if (mLineageBatteryLights == null) {
+            // mPortalRomBatteryLights is initialized during PHASE_BOOT_COMPLETED
+            // This means we don't have PortalRom battery settings yet so skip.
+            if (mPortalRomBatteryLights == null) {
                 if (DEBUG) {
-                    Slog.w(TAG, "updateLightsLocked: mLineageBatteryLights is not yet ready; "
+                    Slog.w(TAG, "updateLightsLocked: mPortalRomBatteryLights is not yet ready; "
                             + "skipping");
                 }
                 return;
             }
-            if (!mLineageBatteryLights.isSupported()) {
+            if (!mPortalRomBatteryLights.isSupported()) {
                 return;
             }
 
             LedValues ledValues = new LedValues(0 /* color */, mBatteryLedOn, mBatteryLedOff);
-            mLineageBatteryLights.calcLights(ledValues, mHealthInfo.batteryLevel,
+            mPortalRomBatteryLights.calcLights(ledValues, mHealthInfo.batteryLevel,
                     mHealthInfo.batteryStatus, mHealthInfo.batteryLevel <= mLowBatteryWarningLevel);
 
             if (!ledValues.isEnabled()) {

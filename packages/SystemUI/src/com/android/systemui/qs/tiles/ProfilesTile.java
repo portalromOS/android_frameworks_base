@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2015 The CyanogenMod Project
- *               2017-2018 The LineageOS Project
+ * Copyright (C) 2022 The Portal Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -57,11 +56,11 @@ import com.android.systemui.statusbar.phone.KeyguardDismissUtil;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
 import com.android.systemui.statusbar.phone.SystemUIDialog;
 
-import lineageos.app.Profile;
-import lineageos.app.ProfileManager;
-import lineageos.providers.LineageSettings;
+import portalrom.app.Profile;
+import portalrom.app.ProfileManager;
+import portalrom.providers.PortalRomSettings;
 
-import org.lineageos.internal.logging.LineageMetricsLogger;
+import org.portalrom.internal.logging.PortalRomMetricsLogger;
 
 import java.util.Arrays;
 import java.util.List;
@@ -71,7 +70,7 @@ import javax.inject.Inject;
 public class ProfilesTile extends QSTileImpl<State> {
 
     private static final Intent PROFILES_SETTINGS =
-            new Intent("org.lineageos.lineageparts.PROFILES_SETTINGS");
+            new Intent("org.portalrom.portalromparts.PROFILES_SETTINGS");
 
     private final Icon mIcon = ResourceIcon.get(R.drawable.ic_qs_profiles);
 
@@ -173,18 +172,18 @@ public class ProfilesTile extends QSTileImpl<State> {
     }
 
     private void setProfilesEnabled(Boolean enabled) {
-        LineageSettings.System.putInt(mContext.getContentResolver(),
-                LineageSettings.System.SYSTEM_PROFILES_ENABLED, enabled ? 1 : 0);
+        PortalRomSettings.System.putInt(mContext.getContentResolver(),
+                PortalRomSettings.System.SYSTEM_PROFILES_ENABLED, enabled ? 1 : 0);
     }
 
     private boolean profilesEnabled() {
-        return LineageSettings.System.getInt(mContext.getContentResolver(),
-                LineageSettings.System.SYSTEM_PROFILES_ENABLED, 1) == 1;
+        return PortalRomSettings.System.getInt(mContext.getContentResolver(),
+                PortalRomSettings.System.SYSTEM_PROFILES_ENABLED, 1) == 1;
     }
 
     @Override
     public int getMetricsCategory() {
-        return LineageMetricsLogger.TILE_PROFILES;
+        return PortalRomMetricsLogger.TILE_PROFILES;
     }
 
     @Override
@@ -321,8 +320,8 @@ public class ProfilesTile extends QSTileImpl<State> {
 
         public void startObserving() {
             mContext.getContentResolver().registerContentObserver(
-                    LineageSettings.System.getUriFor(
-                            LineageSettings.System.SYSTEM_PROFILES_ENABLED), false, this);
+                    PortalRomSettings.System.getUriFor(
+                            PortalRomSettings.System.SYSTEM_PROFILES_ENABLED), false, this);
         }
 
         public void endObserving() {

@@ -29,7 +29,7 @@ import static com.android.internal.widget.LockPatternUtils.StrongAuthTracker.STR
 import static com.android.internal.widget.LockPatternUtils.StrongAuthTracker.STRONG_AUTH_REQUIRED_AFTER_USER_LOCKDOWN;
 import static com.android.systemui.shared.system.QuickStepContract.SYSUI_STATE_GLOBAL_ACTIONS_SHOWING;
 
-import static org.lineageos.internal.util.PowerMenuConstants.*;
+import static org.portalrom.internal.util.PowerMenuConstants.*;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -145,10 +145,10 @@ import com.android.systemui.util.RingerModeTracker;
 import com.android.systemui.util.settings.GlobalSettings;
 import com.android.systemui.util.settings.SecureSettings;
 
-import lineageos.app.LineageGlobalActions;
-import lineageos.providers.LineageSettings;
+import portalrom.app.PortalRomGlobalActions;
+import portalrom.providers.PortalRomSettings;
 
-import org.lineageos.internal.util.PowerMenuUtils;
+import org.portalrom.internal.util.PowerMenuUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -174,12 +174,12 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
     private static final String TAG = "GlobalActionsDialogLite";
 
     private static final String POWER_MENU_ACTIONS_STRING =
-            "lineagesecure:" + LineageSettings.Secure.POWER_MENU_ACTIONS;
+            "portalromsecure:" + PortalRomSettings.Secure.POWER_MENU_ACTIONS;
 
     private static final boolean SHOW_SILENT_TOGGLE = true;
 
     /* Valid settings for restart actions keys.
-     * see lineage-sdk config.xml config_restartActionsList */
+     * see portalrom-sdk config.xml config_restartActionsList */
     private static final String RESTART_ACTION_KEY_RESTART = "restart";
     private static final String RESTART_ACTION_KEY_RESTART_RECOVERY = "restart_recovery";
     private static final String RESTART_ACTION_KEY_RESTART_BOOTLOADER = "restart_bootloader";
@@ -210,7 +210,7 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
     private final MetricsLogger mMetricsLogger;
     private final UiEventLogger mUiEventLogger;
     private final SysUiState mSysUiState;
-    private final LineageGlobalActions mLineageGlobalActions;
+    private final PortalRomGlobalActions mPortalRomGlobalActions;
 
     // Used for RingerModeTracker
     private final LifecycleRegistry mLifecycle = new LifecycleRegistry(this);
@@ -406,7 +406,7 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
         mDialogLaunchAnimator = dialogLaunchAnimator;
         mDialogManager = dialogManager;
         mControlsComponent = controlsComponent;
-        mLineageGlobalActions = LineageGlobalActions.getInstance(mContext);
+        mPortalRomGlobalActions = PortalRomGlobalActions.getInstance(mContext);
 
         // receive broadcasts
         IntentFilter filter = new IntentFilter();
@@ -438,7 +438,7 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
 
         Dependency.get(TunerService.class).addTunable(this, POWER_MENU_ACTIONS_STRING);
 
-        mActions = mLineageGlobalActions.getUserActionsArray();
+        mActions = mPortalRomGlobalActions.getUserActionsArray();
     }
 
     /**
@@ -589,7 +589,7 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
     @VisibleForTesting
     protected String[] getRestartActions() {
         return mResources.getStringArray(
-                org.lineageos.platform.internal.R.array.config_restartActionsList);
+                org.portalrom.platform.internal.R.array.config_restartActionsList);
     }
 
     @VisibleForTesting
@@ -1534,7 +1534,7 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
     @Override
     public void onTuningChanged(String key, String newValue) {
         if (POWER_MENU_ACTIONS_STRING.equals(key)) {
-            mActions = mLineageGlobalActions.getUserActionsArray();
+            mActions = mPortalRomGlobalActions.getUserActionsArray();
         }
     }
 

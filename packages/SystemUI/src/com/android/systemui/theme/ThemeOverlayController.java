@@ -73,7 +73,7 @@ import com.android.systemui.statusbar.policy.DeviceProvisionedController.DeviceP
 import com.android.systemui.util.settings.SecureSettings;
 import com.android.systemui.util.settings.SystemSettings;
 
-import lineageos.providers.LineageSettings;
+import portalrom.providers.PortalRomSettings;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -103,7 +103,7 @@ import javax.inject.Inject;
 public class ThemeOverlayController extends SystemUI implements Dumpable {
     protected static final String TAG = "ThemeOverlayController";
     protected static final String OVERLAY_BERRY_BLACK_THEME =
-            "org.lineageos.overlay.customization.blacktheme";
+            "org.portalrom.overlay.customization.blacktheme";
     private static final boolean DEBUG = true;
 
     protected static final int NEUTRAL = 0;
@@ -421,7 +421,7 @@ public class ThemeOverlayController extends SystemUI implements Dumpable {
                 UserHandle.USER_ALL);
 
         mSystemSettings.registerContentObserverForUser(
-                LineageSettings.System.getUriFor(LineageSettings.System.BERRY_BLACK_THEME),
+                PortalRomSettings.System.getUriFor(PortalRomSettings.System.BERRY_BLACK_THEME),
                 false,
                 new ContentObserver(mBgHandler) {
                     @Override
@@ -442,7 +442,7 @@ public class ThemeOverlayController extends SystemUI implements Dumpable {
                 UserHandle.USER_ALL);
 
         mSystemSettings.registerContentObserverForUser(
-                LineageSettings.System.getUriFor(LineageSettings.System.STATUS_BAR_BATTERY_STYLE),
+                PortalRomSettings.System.getUriFor(PortalRomSettings.System.STATUS_BAR_BATTERY_STYLE),
                 false,
                 new ContentObserver(mBgHandler) {
                     @Override
@@ -457,9 +457,9 @@ public class ThemeOverlayController extends SystemUI implements Dumpable {
                             mDeferredThemeEvaluation = true;
                             return;
                         }
-                        boolean isCircleBattery = LineageSettings.System.getIntForUser(
+                        boolean isCircleBattery = PortalRomSettings.System.getIntForUser(
                                 mContext.getContentResolver(),
-                                LineageSettings.System.STATUS_BAR_BATTERY_STYLE,
+                                PortalRomSettings.System.STATUS_BAR_BATTERY_STYLE,
                                 0, UserHandle.USER_CURRENT) == 1;
                         if (isCircleBattery) {
                             reevaluateSystemTheme(true /* forceReload */);
@@ -682,8 +682,8 @@ public class ThemeOverlayController extends SystemUI implements Dumpable {
             categoryToPackage.put(OVERLAY_CATEGORY_ACCENT_COLOR, mSecondaryOverlay.getIdentifier());
         }
 
-        boolean isBlackMode = (LineageSettings.System.getIntForUser(
-                mContext.getContentResolver(), LineageSettings.System.BERRY_BLACK_THEME,
+        boolean isBlackMode = (PortalRomSettings.System.getIntForUser(
+                mContext.getContentResolver(), PortalRomSettings.System.BERRY_BLACK_THEME,
                 0, currentUser) == 1) && isNightMode();
         if (categoryToPackage.containsKey(OVERLAY_CATEGORY_SYSTEM_PALETTE) && isBlackMode) {
             OverlayIdentifier blackTheme = new OverlayIdentifier(OVERLAY_BERRY_BLACK_THEME);

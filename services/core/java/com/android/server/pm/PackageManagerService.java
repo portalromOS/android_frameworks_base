@@ -7398,7 +7398,7 @@ public class PackageManagerService extends IPackageManager.Stub
         mEnableFreeCacheV2 = SystemProperties.getBoolean("fw.free_cache_v2", true);
 
         mVendorPlatformSignatures = createSignatures(mContext.getResources().getStringArray(
-                org.lineageos.platform.internal.R.array.config_vendorPlatformSignatures));
+                org.portalrom.platform.internal.R.array.config_vendorPlatformSignatures));
 
         // Create sub-components that provide services / data. Order here is important.
         t.traceBegin("createSubComponents");
@@ -8073,15 +8073,15 @@ public class PackageManagerService extends IPackageManager.Stub
             // Disable components marked for disabling at build-time
             mDisabledComponentsList = new ArrayList<ComponentName>();
             enableComponents(mContext.getResources().getStringArray(
-                     org.lineageos.platform.internal.R.array.config_deviceDisabledComponents),
+                     org.portalrom.platform.internal.R.array.config_deviceDisabledComponents),
                      false);
             enableComponents(mContext.getResources().getStringArray(
-                    org.lineageos.platform.internal.R.array.config_globallyDisabledComponents),
+                    org.portalrom.platform.internal.R.array.config_globallyDisabledComponents),
                     false);
 
             // Enable components marked for forced-enable at build-time
             enableComponents(mContext.getResources().getStringArray(
-                    org.lineageos.platform.internal.R.array.config_forceEnabledComponents),
+                    org.portalrom.platform.internal.R.array.config_forceEnabledComponents),
                     true);
 
             // If this is first boot after an OTA, and a normal boot, then
@@ -10187,8 +10187,8 @@ public class PackageManagerService extends IPackageManager.Stub
             return result;
         }
         // To support backwards compatibility with clients of this API expecting pre-key
-        // rotation results if either of the packages has a signing lineage the oldest signer
-        // in the lineage is used for signature verification.
+        // rotation results if either of the packages has a signing portalrom the oldest signer
+        // in the portalrom is used for signature verification.
         if (p1SigningDetails.hasPastSigningCertificates()
                 || p2SigningDetails.hasPastSigningCertificates()) {
             Signature[] p1Signatures = p1SigningDetails.hasPastSigningCertificates()
@@ -19712,13 +19712,13 @@ public class PackageManagerService extends IPackageManager.Stub
                     // signing certificate than the existing one, and if so, copy over the new
                     // details
                     if (signatureCheckPs.sharedUser != null) {
-                        // Attempt to merge the existing lineage for the shared SigningDetails with
-                        // the lineage of the new package; if the shared SigningDetails are not
-                        // returned this indicates the new package added new signers to the lineage
-                        // and/or changed the capabilities of existing signers in the lineage.
+                        // Attempt to merge the existing portalrom for the shared SigningDetails with
+                        // the portalrom of the new package; if the shared SigningDetails are not
+                        // returned this indicates the new package added new signers to the portalrom
+                        // and/or changed the capabilities of existing signers in the portalrom.
                         SigningDetails sharedSigningDetails =
                                 signatureCheckPs.sharedUser.signatures.mSigningDetails;
-                        SigningDetails mergedDetails = sharedSigningDetails.mergeLineageWith(
+                        SigningDetails mergedDetails = sharedSigningDetails.mergePortalRomWith(
                                 signingDetails);
                         if (mergedDetails != sharedSigningDetails) {
                             signatureCheckPs.sharedUser.signatures.mSigningDetails = mergedDetails;
@@ -21075,7 +21075,7 @@ public class PackageManagerService extends IPackageManager.Stub
                                 && !oldPkgSigningDetails.checkCapability(parsedPkgSigningDetails,
                                 SigningDetails.CertCapabilities.ROLLBACK)) {
                             // Allow the update to proceed if this is a rollback and the parsed
-                            // package's current signing key is the current signer or in the lineage
+                            // package's current signing key is the current signer or in the portalrom
                             // of the old package; this allows a rollback to a previously installed
                             // version after an app's signing key has been rotated without requiring
                             // the rollback capability on the previous signing key.
