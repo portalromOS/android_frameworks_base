@@ -96,8 +96,8 @@ import com.android.server.FgThread;
 import com.android.server.LocalServices;
 import com.android.server.wm.ActivityTaskManagerInternal;
 
-import lineageos.providers.LineageSettings;
-import vendor.lineage.trust.V1_0.IUsbRestrict;
+import portalrom.providers.PortalRomSettings;
+import vendor.portalrom.trust.V1_0.IUsbRestrict;
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -393,7 +393,7 @@ public class UsbDeviceManager implements ActivityTaskManagerInternal.ScreenObser
         mUEventObserver.startObserving(ACCESSORY_START_MATCH);
 
         mContentResolver.registerContentObserver(
-                LineageSettings.Global.getUriFor(LineageSettings.Global.TRUST_RESTRICT_USB),
+                PortalRomSettings.Global.getUriFor(PortalRomSettings.Global.TRUST_RESTRICT_USB),
                 false,
                 new ContentObserver(null) {
                     @Override
@@ -1519,8 +1519,8 @@ public class UsbDeviceManager implements ActivityTaskManagerInternal.ScreenObser
         }
 
         public void setTrustRestrictUsb() {
-            final int restrictUsb = LineageSettings.Global.getInt(mContentResolver,
-                    LineageSettings.Global.TRUST_RESTRICT_USB, 0);
+            final int restrictUsb = PortalRomSettings.Global.getInt(mContentResolver,
+                    PortalRomSettings.Global.TRUST_RESTRICT_USB, 0);
             // Effective immediately, ejects any connected USB devices.
             // If the restriction is set to "only when locked", only execute once USB is
             // disconnected and keyguard is showing, to avoid ejecting connected devices

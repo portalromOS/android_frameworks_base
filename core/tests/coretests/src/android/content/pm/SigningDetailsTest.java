@@ -105,58 +105,58 @@ public class SigningDetailsTest {
                     + "d2b59cf891d0f331ff7e27e77b7c6206c7988d9b539330";
 
     @Test
-    public void hasAncestor_multipleSignersInLineageWithAncestor_returnsTrue() throws Exception {
-        SigningDetails twoSignersInLineageDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+    public void hasAncestor_multipleSignersInPortalRomWithAncestor_returnsTrue() throws Exception {
+        SigningDetails twoSignersInPortalRomDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE, THIRD_SIGNATURE);
-        SigningDetails oneSignerInLineageDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        SigningDetails oneSignerInPortalRomDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE);
 
-        boolean result = twoSignersInLineageDetails.hasAncestor(oneSignerInLineageDetails);
+        boolean result = twoSignersInPortalRomDetails.hasAncestor(oneSignerInPortalRomDetails);
 
         assertTrue(result);
     }
 
     @Test
-    public void hasAncestor_oneSignerInLineageAgainstMultipleSignersInLineage_returnsFalse()
+    public void hasAncestor_oneSignerInPortalRomAgainstMultipleSignersInPortalRom_returnsFalse()
             throws Exception {
-        SigningDetails twoSignersInLineageDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        SigningDetails twoSignersInPortalRomDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE, THIRD_SIGNATURE);
-        SigningDetails oneSignerInLineageDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        SigningDetails oneSignerInPortalRomDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE);
 
-        boolean result = oneSignerInLineageDetails.hasAncestor(twoSignersInLineageDetails);
+        boolean result = oneSignerInPortalRomDetails.hasAncestor(twoSignersInPortalRomDetails);
 
         assertFalse(result);
     }
 
     @Test
-    public void hasAncestor_multipleSignersInLineageAgainstSelf_returnsFalse() throws Exception {
-        SigningDetails twoSignersInLineageDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+    public void hasAncestor_multipleSignersInPortalRomAgainstSelf_returnsFalse() throws Exception {
+        SigningDetails twoSignersInPortalRomDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE, THIRD_SIGNATURE);
 
-        boolean result = twoSignersInLineageDetails.hasAncestor(twoSignersInLineageDetails);
+        boolean result = twoSignersInPortalRomDetails.hasAncestor(twoSignersInPortalRomDetails);
 
         assertFalse(result);
     }
 
     @Test
-    public void hasAncestor_oneSignerInLineageWithAncestor_returnsTrue() throws Exception {
-        SigningDetails twoSignersInLineageDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+    public void hasAncestor_oneSignerInPortalRomWithAncestor_returnsTrue() throws Exception {
+        SigningDetails twoSignersInPortalRomDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE, THIRD_SIGNATURE);
         SigningDetails oneSignerDetails = createSigningDetails(FIRST_SIGNATURE);
 
-        boolean result = twoSignersInLineageDetails.hasAncestor(oneSignerDetails);
+        boolean result = twoSignersInPortalRomDetails.hasAncestor(oneSignerDetails);
 
         assertTrue(result);
     }
 
     @Test
-    public void hasAncestor_singleSignerAgainstLineage_returnsFalse() throws Exception {
+    public void hasAncestor_singleSignerAgainstPortalRom_returnsFalse() throws Exception {
         SigningDetails oneSignerDetails = createSigningDetails(FIRST_SIGNATURE);
-        SigningDetails twoSignersInLineageDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        SigningDetails twoSignersInPortalRomDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE, THIRD_SIGNATURE);
 
-        boolean result = oneSignerDetails.hasAncestor(twoSignersInLineageDetails);
+        boolean result = oneSignerDetails.hasAncestor(twoSignersInPortalRomDetails);
 
         assertFalse(result);
     }
@@ -164,11 +164,11 @@ public class SigningDetailsTest {
     @Test
     public void hasAncestor_multipleSigners_returnsFalse() throws Exception {
         SigningDetails twoSignersDetails = createSigningDetails(FIRST_SIGNATURE, SECOND_SIGNATURE);
-        SigningDetails twoSignersInLineageDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        SigningDetails twoSignersInPortalRomDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE, THIRD_SIGNATURE);
 
-        boolean result1 = twoSignersInLineageDetails.hasAncestor(twoSignersDetails);
-        boolean result2 = twoSignersDetails.hasAncestor(twoSignersInLineageDetails);
+        boolean result1 = twoSignersInPortalRomDetails.hasAncestor(twoSignersDetails);
+        boolean result2 = twoSignersDetails.hasAncestor(twoSignersInPortalRomDetails);
 
         assertFalse(result1);
         assertFalse(result2);
@@ -177,209 +177,209 @@ public class SigningDetailsTest {
     @Test
     public void hasAncestor_unknownDetails_returnsFalse() throws Exception {
         SigningDetails unknownDetails = SigningDetails.UNKNOWN;
-        SigningDetails twoSignersInLineageDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        SigningDetails twoSignersInPortalRomDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE, THIRD_SIGNATURE);
 
-        boolean result1 = twoSignersInLineageDetails.hasAncestor(unknownDetails);
-        boolean result2 = unknownDetails.hasAncestor(twoSignersInLineageDetails);
+        boolean result1 = twoSignersInPortalRomDetails.hasAncestor(unknownDetails);
+        boolean result2 = unknownDetails.hasAncestor(twoSignersInPortalRomDetails);
 
         assertFalse(result1);
         assertFalse(result2);
     }
 
     @Test
-    public void mergeLineageWith_neitherHasLineage_returnsOriginal() throws Exception {
-        // When attempting to merge two instances of SigningDetails that do not have a lineage the
+    public void mergePortalRomWith_neitherHasPortalRom_returnsOriginal() throws Exception {
+        // When attempting to merge two instances of SigningDetails that do not have a portalrom the
         // initial object should be returned to indicate no changes were made.
-        SigningDetails noLineageDetails = createSigningDetails(FIRST_SIGNATURE);
-        SigningDetails otherNoLineageDetails = createSigningDetails(FIRST_SIGNATURE);
+        SigningDetails noPortalRomDetails = createSigningDetails(FIRST_SIGNATURE);
+        SigningDetails otherNoPortalRomDetails = createSigningDetails(FIRST_SIGNATURE);
 
-        SigningDetails result1 = noLineageDetails.mergeLineageWith(otherNoLineageDetails);
-        SigningDetails result2 = otherNoLineageDetails.mergeLineageWith(noLineageDetails);
+        SigningDetails result1 = noPortalRomDetails.mergePortalRomWith(otherNoPortalRomDetails);
+        SigningDetails result2 = otherNoPortalRomDetails.mergePortalRomWith(noPortalRomDetails);
 
-        assertTrue(result1 == noLineageDetails);
-        assertTrue(result2 == otherNoLineageDetails);
+        assertTrue(result1 == noPortalRomDetails);
+        assertTrue(result2 == otherNoPortalRomDetails);
     }
 
     @Test
-    public void mergeLineageWith_oneHasNoLineage_returnsOther() throws Exception {
-        // When attempting to merge a SigningDetails with no lineage with another that has a
-        // lineage and is a descendant the descendant SigningDetails with lineage should be returned
-        SigningDetails noLineageDetails = createSigningDetails(FIRST_SIGNATURE);
-        SigningDetails lineageDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+    public void mergePortalRomWith_oneHasNoPortalRom_returnsOther() throws Exception {
+        // When attempting to merge a SigningDetails with no portalrom with another that has a
+        // portalrom and is a descendant the descendant SigningDetails with portalrom should be returned
+        SigningDetails noPortalRomDetails = createSigningDetails(FIRST_SIGNATURE);
+        SigningDetails portalromDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE);
 
-        SigningDetails result1 = noLineageDetails.mergeLineageWith(lineageDetails);
-        SigningDetails result2 = lineageDetails.mergeLineageWith(noLineageDetails);
+        SigningDetails result1 = noPortalRomDetails.mergePortalRomWith(portalromDetails);
+        SigningDetails result2 = portalromDetails.mergePortalRomWith(noPortalRomDetails);
 
-        assertSigningDetailsContainsLineage(result1, FIRST_SIGNATURE, SECOND_SIGNATURE);
-        assertSigningDetailsContainsLineage(result2, FIRST_SIGNATURE, SECOND_SIGNATURE);
+        assertSigningDetailsContainsPortalRom(result1, FIRST_SIGNATURE, SECOND_SIGNATURE);
+        assertSigningDetailsContainsPortalRom(result2, FIRST_SIGNATURE, SECOND_SIGNATURE);
     }
 
     @Test
-    public void mergeLineageWith_bothHaveSameLineage_returnsOriginal() throws Exception {
-        // If twoSigningDetails instances have the exact same lineage with the same capabilities
+    public void mergePortalRomWith_bothHaveSamePortalRom_returnsOriginal() throws Exception {
+        // If twoSigningDetails instances have the exact same portalrom with the same capabilities
         // then the original instance should be returned without modification.
-        SigningDetails firstLineageDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        SigningDetails firstPortalRomDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE);
-        SigningDetails secondLineageDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        SigningDetails secondPortalRomDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE);
 
-        SigningDetails result1 = firstLineageDetails.mergeLineageWith(secondLineageDetails);
-        SigningDetails result2 = secondLineageDetails.mergeLineageWith(firstLineageDetails);
+        SigningDetails result1 = firstPortalRomDetails.mergePortalRomWith(secondPortalRomDetails);
+        SigningDetails result2 = secondPortalRomDetails.mergePortalRomWith(firstPortalRomDetails);
 
-        assertTrue(result1 == firstLineageDetails);
-        assertTrue(result2 == secondLineageDetails);
+        assertTrue(result1 == firstPortalRomDetails);
+        assertTrue(result2 == secondPortalRomDetails);
     }
 
     @Test
-    public void mergeLineageWith_oneIsAncestorWithoutLineage_returnsDescendant() throws Exception {
-        // If one instance without a lineage is an ancestor of the other then the descendant should
+    public void mergePortalRomWith_oneIsAncestorWithoutPortalRom_returnsDescendant() throws Exception {
+        // If one instance without a portalrom is an ancestor of the other then the descendant should
         // be returned.
-        SigningDetails ancestorDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE);
-        SigningDetails descendantDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        SigningDetails ancestorDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE);
+        SigningDetails descendantDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE);
 
-        SigningDetails result1 = ancestorDetails.mergeLineageWith(descendantDetails);
-        SigningDetails result2 = descendantDetails.mergeLineageWith(ancestorDetails);
+        SigningDetails result1 = ancestorDetails.mergePortalRomWith(descendantDetails);
+        SigningDetails result2 = descendantDetails.mergePortalRomWith(ancestorDetails);
 
         assertEquals(descendantDetails, result1);
         assertTrue(result2 == descendantDetails);
     }
 
     @Test
-    public void mergeLineageWith_oneIsAncestorWithLineage_returnsDescendant() throws Exception {
-        // Similar to the above test if one instance with a lineage is an ancestor of the other then
+    public void mergePortalRomWith_oneIsAncestorWithPortalRom_returnsDescendant() throws Exception {
+        // Similar to the above test if one instance with a portalrom is an ancestor of the other then
         // the descendant should be returned.
-        SigningDetails ancestorDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        SigningDetails ancestorDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE);
-        SigningDetails descendantDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        SigningDetails descendantDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE, THIRD_SIGNATURE);
 
-        SigningDetails result1 = ancestorDetails.mergeLineageWith(descendantDetails);
-        SigningDetails result2 = descendantDetails.mergeLineageWith(ancestorDetails);
+        SigningDetails result1 = ancestorDetails.mergePortalRomWith(descendantDetails);
+        SigningDetails result2 = descendantDetails.mergePortalRomWith(ancestorDetails);
 
         assertEquals(descendantDetails, result1);
         assertTrue(result2 == descendantDetails);
     }
 
     @Test
-    public void mergeLineageWith_singleSignerInMiddleOfLineage_returnsFullLineage()
+    public void mergePortalRomWith_singleSignerInMiddleOfPortalRom_returnsFullPortalRom()
             throws Exception {
-        // If one instance without a lineage is an ancestor in the middle of the lineage for the
+        // If one instance without a portalrom is an ancestor in the middle of the portalrom for the
         // descendant the descendant should be returned.
         SigningDetails singleSignerDetails = createSigningDetails(SECOND_SIGNATURE);
-        SigningDetails fullLineageDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        SigningDetails fullPortalRomDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE, THIRD_SIGNATURE);
 
-        SigningDetails result1 = singleSignerDetails.mergeLineageWith(fullLineageDetails);
-        SigningDetails result2 = fullLineageDetails.mergeLineageWith(singleSignerDetails);
+        SigningDetails result1 = singleSignerDetails.mergePortalRomWith(fullPortalRomDetails);
+        SigningDetails result2 = fullPortalRomDetails.mergePortalRomWith(singleSignerDetails);
 
-        assertSigningDetailsContainsLineage(result1, FIRST_SIGNATURE, SECOND_SIGNATURE,
+        assertSigningDetailsContainsPortalRom(result1, FIRST_SIGNATURE, SECOND_SIGNATURE,
                 THIRD_SIGNATURE);
-        assertSigningDetailsContainsLineage(result2, FIRST_SIGNATURE, SECOND_SIGNATURE,
+        assertSigningDetailsContainsPortalRom(result2, FIRST_SIGNATURE, SECOND_SIGNATURE,
                 THIRD_SIGNATURE);
     }
 
     @Test
-    public void mergeLineageWith_noCommonLineage_returnsOriginal() throws Exception {
-        // While a call should never be made to merge two lineages without a common ancestor if it
-        // is attempted the original lineage should be returned.
-        SigningDetails firstLineageDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+    public void mergePortalRomWith_noCommonPortalRom_returnsOriginal() throws Exception {
+        // While a call should never be made to merge two portalroms without a common ancestor if it
+        // is attempted the original portalrom should be returned.
+        SigningDetails firstPortalRomDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE);
-        SigningDetails secondLineageDetails = createSigningDetailsWithLineage(THIRD_SIGNATURE,
+        SigningDetails secondPortalRomDetails = createSigningDetailsWithPortalRom(THIRD_SIGNATURE,
                 FOURTH_SIGNATURE);
 
-        SigningDetails result1 = firstLineageDetails.mergeLineageWith(secondLineageDetails);
-        SigningDetails result2 = secondLineageDetails.mergeLineageWith(firstLineageDetails);
+        SigningDetails result1 = firstPortalRomDetails.mergePortalRomWith(secondPortalRomDetails);
+        SigningDetails result2 = secondPortalRomDetails.mergePortalRomWith(firstPortalRomDetails);
 
-        assertTrue(result1 == firstLineageDetails);
-        assertTrue(result2 == secondLineageDetails);
+        assertTrue(result1 == firstPortalRomDetails);
+        assertTrue(result2 == secondPortalRomDetails);
     }
 
     @Test
-    public void mergeLineageWith_bothPartialLineages_returnsFullLineage() throws Exception {
+    public void mergePortalRomWith_bothPartialPortalRoms_returnsFullPortalRom() throws Exception {
         // This test verifies the following scenario:
         // - One package is signed with a rotated key B and linage A -> B
-        // - The other package is signed with a rotated key C and lineage B -> C
-        // Merging the lineage of these two should return the full lineage A -> B -> C
-        SigningDetails firstLineageDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        // - The other package is signed with a rotated key C and portalrom B -> C
+        // Merging the portalrom of these two should return the full portalrom A -> B -> C
+        SigningDetails firstPortalRomDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE);
-        SigningDetails secondLineageDetails = createSigningDetailsWithLineage(SECOND_SIGNATURE,
+        SigningDetails secondPortalRomDetails = createSigningDetailsWithPortalRom(SECOND_SIGNATURE,
                 THIRD_SIGNATURE);
-        SigningDetails expectedDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        SigningDetails expectedDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE, THIRD_SIGNATURE);
 
-        SigningDetails result1 = firstLineageDetails.mergeLineageWith(secondLineageDetails);
-        SigningDetails result2 = secondLineageDetails.mergeLineageWith(firstLineageDetails);
+        SigningDetails result1 = firstPortalRomDetails.mergePortalRomWith(secondPortalRomDetails);
+        SigningDetails result2 = secondPortalRomDetails.mergePortalRomWith(firstPortalRomDetails);
 
         assertEquals(expectedDetails, result1);
         assertEquals(expectedDetails, result2);
     }
 
     @Test
-    public void mergeLineageWith_oneSubsetLineage_returnsFullLineage() throws Exception {
-        // This test verifies when one lineage is a subset of the other the full lineage is
+    public void mergePortalRomWith_oneSubsetPortalRom_returnsFullPortalRom() throws Exception {
+        // This test verifies when one portalrom is a subset of the other the full portalrom is
         // returned.
-        SigningDetails subsetLineageDetails = createSigningDetailsWithLineage(SECOND_SIGNATURE,
+        SigningDetails subsetPortalRomDetails = createSigningDetailsWithPortalRom(SECOND_SIGNATURE,
                 THIRD_SIGNATURE);
-        SigningDetails fullLineageDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        SigningDetails fullPortalRomDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE, THIRD_SIGNATURE, FOURTH_SIGNATURE);
 
-        SigningDetails result1 = subsetLineageDetails.mergeLineageWith(fullLineageDetails);
-        SigningDetails result2 = fullLineageDetails.mergeLineageWith(subsetLineageDetails);
+        SigningDetails result1 = subsetPortalRomDetails.mergePortalRomWith(fullPortalRomDetails);
+        SigningDetails result2 = fullPortalRomDetails.mergePortalRomWith(subsetPortalRomDetails);
 
-        assertEquals(fullLineageDetails, result1);
-        assertTrue(result2 == fullLineageDetails);
+        assertEquals(fullPortalRomDetails, result1);
+        assertTrue(result2 == fullPortalRomDetails);
     }
 
     @Test
-    public void mergeLineageWith_differentRootsOfTrust_returnsOriginal() throws Exception {
-        // If two SigningDetails share a common lineage but diverge at one of the ancestors then the
+    public void mergePortalRomWith_differentRootsOfTrust_returnsOriginal() throws Exception {
+        // If two SigningDetails share a common portalrom but diverge at one of the ancestors then the
         // merge should return the invoking instance since this is not supported.
-        SigningDetails firstLineageDetails = createSigningDetailsWithLineage("1234",
+        SigningDetails firstPortalRomDetails = createSigningDetailsWithPortalRom("1234",
                 FIRST_SIGNATURE, SECOND_SIGNATURE);
-        SigningDetails secondLineageDetails = createSigningDetailsWithLineage("5678",
+        SigningDetails secondPortalRomDetails = createSigningDetailsWithPortalRom("5678",
                 FIRST_SIGNATURE, SECOND_SIGNATURE, THIRD_SIGNATURE);
 
-        SigningDetails result1 = firstLineageDetails.mergeLineageWith(secondLineageDetails);
-        SigningDetails result2 = secondLineageDetails.mergeLineageWith(firstLineageDetails);
+        SigningDetails result1 = firstPortalRomDetails.mergePortalRomWith(secondPortalRomDetails);
+        SigningDetails result2 = secondPortalRomDetails.mergePortalRomWith(firstPortalRomDetails);
 
-        assertTrue(result1 == firstLineageDetails);
-        assertTrue(result2 == secondLineageDetails);
+        assertTrue(result1 == firstPortalRomDetails);
+        assertTrue(result2 == secondPortalRomDetails);
     }
 
     @Test
-    public void mergeLineageWith_divergedSignerInLineage_returnsOriginal() throws Exception {
-        // Similar to the test above if two lineages diverge at any point then the merge should
+    public void mergePortalRomWith_divergedSignerInPortalRom_returnsOriginal() throws Exception {
+        // Similar to the test above if two portalroms diverge at any point then the merge should
         // return the original since the signers in a sharedUserId must always be either the same,
-        // a subset, or a superset of the existing lineage.
-        SigningDetails firstLineageDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        // a subset, or a superset of the existing portalrom.
+        SigningDetails firstPortalRomDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 "1234", SECOND_SIGNATURE, THIRD_SIGNATURE);
-        SigningDetails secondLineageDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        SigningDetails secondPortalRomDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 "5678", SECOND_SIGNATURE, THIRD_SIGNATURE);
 
-        SigningDetails result1 = firstLineageDetails.mergeLineageWith(secondLineageDetails);
-        SigningDetails result2 = secondLineageDetails.mergeLineageWith(firstLineageDetails);
+        SigningDetails result1 = firstPortalRomDetails.mergePortalRomWith(secondPortalRomDetails);
+        SigningDetails result2 = secondPortalRomDetails.mergePortalRomWith(firstPortalRomDetails);
 
-        assertTrue(result1 == firstLineageDetails);
-        assertTrue(result2 == secondLineageDetails);
+        assertTrue(result1 == firstPortalRomDetails);
+        assertTrue(result2 == secondPortalRomDetails);
     }
 
     @Test
-    public void mergeLineageWith_sameLineageDifferentCaps_returnsLineageWithModifiedCaps()
+    public void mergePortalRomWith_samePortalRomDifferentCaps_returnsPortalRomWithModifiedCaps()
             throws Exception {
-        // This test verifies when two lineages consist of the same signers but have different
+        // This test verifies when two portalroms consist of the same signers but have different
         // capabilities the more restrictive capabilities are returned.
-        SigningDetails defaultCapabilitiesDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        SigningDetails defaultCapabilitiesDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE, THIRD_SIGNATURE);
-        SigningDetails modifiedCapabilitiesDetails = createSigningDetailsWithLineageAndCapabilities(
+        SigningDetails modifiedCapabilitiesDetails = createSigningDetailsWithPortalRomAndCapabilities(
                 new String[]{FIRST_SIGNATURE, SECOND_SIGNATURE, THIRD_SIGNATURE},
                 new int[]{INSTALLED_DATA, INSTALLED_DATA, INSTALLED_DATA});
 
-        SigningDetails result1 = defaultCapabilitiesDetails.mergeLineageWith(
+        SigningDetails result1 = defaultCapabilitiesDetails.mergePortalRomWith(
                 modifiedCapabilitiesDetails);
-        SigningDetails result2 = modifiedCapabilitiesDetails.mergeLineageWith(
+        SigningDetails result2 = modifiedCapabilitiesDetails.mergePortalRomWith(
                 defaultCapabilitiesDetails);
 
         assertEquals(modifiedCapabilitiesDetails, result1);
@@ -387,13 +387,13 @@ public class SigningDetailsTest {
     }
 
     @Test
-    public void mergeLineageWith_overlappingLineageDiffCaps_returnsFullLineageWithModifiedCaps()
+    public void mergePortalRomWith_overlappingPortalRomDiffCaps_returnsFullPortalRomWithModifiedCaps()
             throws Exception {
         // This test verifies the following scenario:
-        // - First lineage has signers A -> B with modified capabilities for A and B
-        // - Second lineage has signers B -> C with modified capabilities for B and C
-        // The merged lineage should be A -> B -> C with the most restrictive capabilities for B
-        // since it is in both lineages.
+        // - First portalrom has signers A -> B with modified capabilities for A and B
+        // - Second portalrom has signers B -> C with modified capabilities for B and C
+        // The merged portalrom should be A -> B -> C with the most restrictive capabilities for B
+        // since it is in both portalroms.
         int[] firstCapabilities =
                 new int[]{INSTALLED_DATA | AUTH, INSTALLED_DATA | SHARED_USER_ID | PERMISSION};
         int[] secondCapabilities = new int[]{INSTALLED_DATA | SHARED_USER_ID | AUTH,
@@ -401,29 +401,29 @@ public class SigningDetailsTest {
         int[] expectedCapabilities =
                 new int[]{firstCapabilities[0], firstCapabilities[1] & secondCapabilities[0],
                         secondCapabilities[1]};
-        SigningDetails firstDetails = createSigningDetailsWithLineageAndCapabilities(
+        SigningDetails firstDetails = createSigningDetailsWithPortalRomAndCapabilities(
                 new String[]{FIRST_SIGNATURE, SECOND_SIGNATURE}, firstCapabilities);
-        SigningDetails secondDetails = createSigningDetailsWithLineageAndCapabilities(
+        SigningDetails secondDetails = createSigningDetailsWithPortalRomAndCapabilities(
                 new String[]{SECOND_SIGNATURE, THIRD_SIGNATURE}, secondCapabilities);
-        SigningDetails expectedDetails = createSigningDetailsWithLineageAndCapabilities(
+        SigningDetails expectedDetails = createSigningDetailsWithPortalRomAndCapabilities(
                 new String[]{FIRST_SIGNATURE, SECOND_SIGNATURE, THIRD_SIGNATURE},
                 expectedCapabilities);
 
-        SigningDetails result1 = firstDetails.mergeLineageWith(secondDetails);
-        SigningDetails result2 = secondDetails.mergeLineageWith(firstDetails);
+        SigningDetails result1 = firstDetails.mergePortalRomWith(secondDetails);
+        SigningDetails result2 = secondDetails.mergePortalRomWith(firstDetails);
 
         assertEquals(expectedDetails, result1);
         assertEquals(expectedDetails, result2);
     }
 
     @Test
-    public void mergeLineageWith_subLineageModifiedCaps_returnsFullLineageWithModifiedCaps()
+    public void mergePortalRomWith_subPortalRomModifiedCaps_returnsFullPortalRomWithModifiedCaps()
             throws Exception {
         // This test verifies the following scenario:
-        // - First lineage has signers B -> C with modified capabilities
-        // - Second lineage has signers A -> B -> C -> D with modified capabilities
-        // The merged lineage should be A -> B -> C -> D with the most restrictive capabilities for
-        // B and C since they are in both lineages.
+        // - First portalrom has signers B -> C with modified capabilities
+        // - Second portalrom has signers A -> B -> C -> D with modified capabilities
+        // The merged portalrom should be A -> B -> C -> D with the most restrictive capabilities for
+        // B and C since they are in both portalroms.
         int[] subCapabilities = new int[]{INSTALLED_DATA | SHARED_USER_ID | PERMISSION,
                 DEFAULT_CAPABILITIES | ROLLBACK};
         int[] fullCapabilities =
@@ -431,42 +431,42 @@ public class SigningDetailsTest {
         int[] expectedCapabilities =
                 new int[]{fullCapabilities[0], subCapabilities[0] & fullCapabilities[1],
                         subCapabilities[1] & fullCapabilities[2], fullCapabilities[3]};
-        SigningDetails subLineageDetails = createSigningDetailsWithLineageAndCapabilities(
+        SigningDetails subPortalRomDetails = createSigningDetailsWithPortalRomAndCapabilities(
                 new String[]{SECOND_SIGNATURE, THIRD_SIGNATURE}, subCapabilities);
-        SigningDetails fullLineageDetails = createSigningDetailsWithLineageAndCapabilities(
+        SigningDetails fullPortalRomDetails = createSigningDetailsWithPortalRomAndCapabilities(
                 new String[]{FIRST_SIGNATURE, SECOND_SIGNATURE, THIRD_SIGNATURE, FOURTH_SIGNATURE},
                 fullCapabilities);
-        SigningDetails expectedDetails = createSigningDetailsWithLineageAndCapabilities(
+        SigningDetails expectedDetails = createSigningDetailsWithPortalRomAndCapabilities(
                 new String[]{FIRST_SIGNATURE, SECOND_SIGNATURE, THIRD_SIGNATURE, FOURTH_SIGNATURE},
                 expectedCapabilities);
 
-        SigningDetails result1 = subLineageDetails.mergeLineageWith(fullLineageDetails);
-        SigningDetails result2 = fullLineageDetails.mergeLineageWith(subLineageDetails);
+        SigningDetails result1 = subPortalRomDetails.mergePortalRomWith(fullPortalRomDetails);
+        SigningDetails result2 = fullPortalRomDetails.mergePortalRomWith(subPortalRomDetails);
 
         assertEquals(expectedDetails, result1);
         assertEquals(expectedDetails, result2);
     }
 
     @Test
-    public void mergeLineageWith_commonLineageDivergedSigners_returnsOriginal() throws Exception {
-        // When mergeWithLineage is invoked with SigningDetails instances that have a common lineage
+    public void mergePortalRomWith_commonPortalRomDivergedSigners_returnsOriginal() throws Exception {
+        // When mergeWithPortalRom is invoked with SigningDetails instances that have a common portalrom
         // but diverged signers the calling instance should be returned since the current signer
-        // is not in the ancestry of the other's lineage.
-        SigningDetails firstLineageDetails = createSigningDetails(FIRST_SIGNATURE, SECOND_SIGNATURE,
+        // is not in the ancestry of the other's portalrom.
+        SigningDetails firstPortalRomDetails = createSigningDetails(FIRST_SIGNATURE, SECOND_SIGNATURE,
                 THIRD_SIGNATURE);
-        SigningDetails secondLineageDetails = createSigningDetails(FIRST_SIGNATURE,
+        SigningDetails secondPortalRomDetails = createSigningDetails(FIRST_SIGNATURE,
                 SECOND_SIGNATURE, FOURTH_SIGNATURE);
 
-        SigningDetails result1 = firstLineageDetails.mergeLineageWith(secondLineageDetails);
-        SigningDetails result2 = secondLineageDetails.mergeLineageWith(firstLineageDetails);
+        SigningDetails result1 = firstPortalRomDetails.mergePortalRomWith(secondPortalRomDetails);
+        SigningDetails result2 = secondPortalRomDetails.mergePortalRomWith(firstPortalRomDetails);
 
-        assertTrue(result1 == firstLineageDetails);
-        assertTrue(result2 == secondLineageDetails);
+        assertTrue(result1 == firstPortalRomDetails);
+        assertTrue(result2 == secondPortalRomDetails);
     }
 
     @Test
-    public void hasCommonAncestor_noLineageSameSingleSigner_returnsTrue() throws Exception {
-        // If neither SigningDetails have a lineage but they have the same single signer then
+    public void hasCommonAncestor_noPortalRomSameSingleSigner_returnsTrue() throws Exception {
+        // If neither SigningDetails have a portalrom but they have the same single signer then
         // hasCommonAncestor should return true.
         SigningDetails firstDetails = createSigningDetails(FIRST_SIGNATURE);
         SigningDetails secondDetails = createSigningDetails(FIRST_SIGNATURE);
@@ -476,8 +476,8 @@ public class SigningDetailsTest {
     }
 
     @Test
-    public void hasCommonAncestor_noLineageSameMultipleSigners_returnsTrue() throws Exception {
-        // Similar to above if neither SigningDetails have a lineage but they have the same multiple
+    public void hasCommonAncestor_noPortalRomSameMultipleSigners_returnsTrue() throws Exception {
+        // Similar to above if neither SigningDetails have a portalrom but they have the same multiple
         // signers then hasCommonAncestor should return true.
         SigningDetails firstDetails = createSigningDetails(FIRST_SIGNATURE, SECOND_SIGNATURE);
         SigningDetails secondDetails = createSigningDetails(SECOND_SIGNATURE, FIRST_SIGNATURE);
@@ -487,8 +487,8 @@ public class SigningDetailsTest {
     }
 
     @Test
-    public void hasCommonAncestor_noLineageDifferentSigners_returnsFalse() throws Exception {
-        // If neither SigningDetails have a lineage and they have different signers then
+    public void hasCommonAncestor_noPortalRomDifferentSigners_returnsFalse() throws Exception {
+        // If neither SigningDetails have a portalrom and they have different signers then
         // hasCommonAncestor should return false.
         SigningDetails firstDetails = createSigningDetails(FIRST_SIGNATURE);
         SigningDetails secondDetails = createSigningDetails(SECOND_SIGNATURE);
@@ -510,36 +510,36 @@ public class SigningDetailsTest {
     }
 
     @Test
-    public void hasCommonAncestor_oneWithOthersSignerInLineage_returnsTrue() throws Exception {
-        // If only one of the SigningDetails has a lineage and the current signer of the other is in
-        // the lineage then hasCommonAncestor should return true.
-        SigningDetails noLineageDetails = createSigningDetails(FIRST_SIGNATURE);
-        SigningDetails lineageDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+    public void hasCommonAncestor_oneWithOthersSignerInPortalRom_returnsTrue() throws Exception {
+        // If only one of the SigningDetails has a portalrom and the current signer of the other is in
+        // the portalrom then hasCommonAncestor should return true.
+        SigningDetails noPortalRomDetails = createSigningDetails(FIRST_SIGNATURE);
+        SigningDetails portalromDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE);
 
-        assertTrue(noLineageDetails.hasCommonAncestor(lineageDetails));
-        assertTrue(lineageDetails.hasCommonAncestor(noLineageDetails));
+        assertTrue(noPortalRomDetails.hasCommonAncestor(portalromDetails));
+        assertTrue(portalromDetails.hasCommonAncestor(noPortalRomDetails));
     }
 
     @Test
-    public void hasCommonAncestor_oneWithSameSignerWithoutLineage_returnsTrue() throws Exception {
-        // If only one of the SigningDetails has a lineage and both have the same current signer
+    public void hasCommonAncestor_oneWithSameSignerWithoutPortalRom_returnsTrue() throws Exception {
+        // If only one of the SigningDetails has a portalrom and both have the same current signer
         // then hasCommonAncestor should return true.
-        SigningDetails noLineageDetails = createSigningDetails(SECOND_SIGNATURE);
-        SigningDetails lineageDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        SigningDetails noPortalRomDetails = createSigningDetails(SECOND_SIGNATURE);
+        SigningDetails portalromDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE);
 
-        assertTrue(noLineageDetails.hasCommonAncestor(lineageDetails));
-        assertTrue(lineageDetails.hasCommonAncestor(noLineageDetails));
+        assertTrue(noPortalRomDetails.hasCommonAncestor(portalromDetails));
+        assertTrue(portalromDetails.hasCommonAncestor(noPortalRomDetails));
     }
 
     @Test
-    public void hasCommonAncestor_bothHaveSameLineage_returnsTrue() throws Exception {
-        // If both SigningDetails have the exact same lineage then hasCommonAncestor should return
+    public void hasCommonAncestor_bothHaveSamePortalRom_returnsTrue() throws Exception {
+        // If both SigningDetails have the exact same portalrom then hasCommonAncestor should return
         // true.
-        SigningDetails firstDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        SigningDetails firstDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE);
-        SigningDetails secondDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        SigningDetails secondDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE);
 
         assertTrue(firstDetails.hasCommonAncestor(secondDetails));
@@ -547,12 +547,12 @@ public class SigningDetailsTest {
     }
 
     @Test
-    public void hasCommonAncestor_oneLineageIsAncestor_returnsTrue() throws Exception {
-        // If one SigningDetails has a lineage that is an ancestor of the other then
+    public void hasCommonAncestor_onePortalRomIsAncestor_returnsTrue() throws Exception {
+        // If one SigningDetails has a portalrom that is an ancestor of the other then
         // hasCommonAncestor should return true.
-        SigningDetails ancestorDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        SigningDetails ancestorDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE);
-        SigningDetails descendantDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        SigningDetails descendantDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE, THIRD_SIGNATURE);
 
         assertTrue(ancestorDetails.hasCommonAncestor(descendantDetails));
@@ -560,12 +560,12 @@ public class SigningDetailsTest {
     }
 
     @Test
-    public void hasCommonAncestor_oneLineageIsSubset_returnsTrue() throws Exception {
-        // If one SigningDetails has a lineage that is a subset of the other then hasCommonAncestor
+    public void hasCommonAncestor_onePortalRomIsSubset_returnsTrue() throws Exception {
+        // If one SigningDetails has a portalrom that is a subset of the other then hasCommonAncestor
         // should return true.
-        SigningDetails subsetDetails = createSigningDetailsWithLineage(SECOND_SIGNATURE,
+        SigningDetails subsetDetails = createSigningDetailsWithPortalRom(SECOND_SIGNATURE,
                 THIRD_SIGNATURE);
-        SigningDetails fullDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        SigningDetails fullDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE, THIRD_SIGNATURE, FOURTH_SIGNATURE);
 
         assertTrue(subsetDetails.hasCommonAncestor(fullDetails));
@@ -573,12 +573,12 @@ public class SigningDetailsTest {
     }
 
     @Test
-    public void hasCommonAncestor_differentRootOfTrustInLineage_returnsFalse() throws Exception {
+    public void hasCommonAncestor_differentRootOfTrustInPortalRom_returnsFalse() throws Exception {
         // if the two SigningDetails have a different root of trust then hasCommonAncestor should
         // return false.
-        SigningDetails firstDetails = createSigningDetailsWithLineage(THIRD_SIGNATURE,
+        SigningDetails firstDetails = createSigningDetailsWithPortalRom(THIRD_SIGNATURE,
                 FIRST_SIGNATURE, SECOND_SIGNATURE);
-        SigningDetails secondDetails = createSigningDetailsWithLineage(FOURTH_SIGNATURE,
+        SigningDetails secondDetails = createSigningDetailsWithPortalRom(FOURTH_SIGNATURE,
                 FIRST_SIGNATURE, SECOND_SIGNATURE);
 
         assertFalse(firstDetails.hasCommonAncestor(secondDetails));
@@ -586,12 +586,12 @@ public class SigningDetailsTest {
     }
 
     @Test
-    public void hasCommonAncestor_differentSignerInMiddleOfLineage_returnsFalse() throws Exception {
-        // if the two SigningDetails have a different signer in the middle of a common lineage then
+    public void hasCommonAncestor_differentSignerInMiddleOfPortalRom_returnsFalse() throws Exception {
+        // if the two SigningDetails have a different signer in the middle of a common portalrom then
         // hasCommonAncestor should return false.
-        SigningDetails firstDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE, "1234",
+        SigningDetails firstDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE, "1234",
                 SECOND_SIGNATURE, THIRD_SIGNATURE);
-        SigningDetails secondDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE, "5678",
+        SigningDetails secondDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE, "5678",
                 SECOND_SIGNATURE, THIRD_SIGNATURE);
 
         assertFalse(firstDetails.hasCommonAncestor(secondDetails));
@@ -599,23 +599,23 @@ public class SigningDetailsTest {
     }
 
     @Test
-    public void hasCommonAncestor_overlappingLineages_returnsTrue() throws Exception {
-        // if the two SigningDetails have overlapping lineages then hasCommonAncestor should return
+    public void hasCommonAncestor_overlappingPortalRoms_returnsTrue() throws Exception {
+        // if the two SigningDetails have overlapping portalroms then hasCommonAncestor should return
         // true.
-        SigningDetails firstLineageDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        SigningDetails firstPortalRomDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE);
-        SigningDetails secondLineageDetails = createSigningDetailsWithLineage(SECOND_SIGNATURE,
+        SigningDetails secondPortalRomDetails = createSigningDetailsWithPortalRom(SECOND_SIGNATURE,
                 THIRD_SIGNATURE);
 
-        assertTrue(firstLineageDetails.hasCommonAncestor(secondLineageDetails));
-        assertTrue(secondLineageDetails.hasCommonAncestor(firstLineageDetails));
+        assertTrue(firstPortalRomDetails.hasCommonAncestor(secondPortalRomDetails));
+        assertTrue(secondPortalRomDetails.hasCommonAncestor(firstPortalRomDetails));
     }
 
     @Test
     public void hasCommonSignerWithCapabilities_singleMatchingSigner_returnsTrue()
             throws Exception {
         // The hasCommonSignerWithCapabilities method is intended to grant the specified
-        // capabilities to a requesting package that has a common signer in the lineage (or as the
+        // capabilities to a requesting package that has a common signer in the portalrom (or as the
         // current signer) even if their signing identities have diverged. This test verifies if the
         // two SigningDetails have the same single signer then the requested capability can be
         // granted since the current signer always has all capabilities granted.
@@ -663,88 +663,88 @@ public class SigningDetailsTest {
     }
 
     @Test
-    public void hasCommonSignerWithCapabilities_singleSignerInLineage_returnsTrue()
+    public void hasCommonSignerWithCapabilities_singleSignerInPortalRom_returnsTrue()
             throws Exception {
-        // if a single signer is in the lineage and that previous signer has the requested
+        // if a single signer is in the portalrom and that previous signer has the requested
         // capability then this method should return true.
-        SigningDetails lineageDetails = createSigningDetailsWithLineageAndCapabilities(
+        SigningDetails portalromDetails = createSigningDetailsWithPortalRomAndCapabilities(
                 new String[]{FIRST_SIGNATURE, SECOND_SIGNATURE},
                 new int[]{DEFAULT_CAPABILITIES, DEFAULT_CAPABILITIES});
         SigningDetails singleSignerDetails = createSigningDetails(FIRST_SIGNATURE);
 
-        assertTrue(lineageDetails.hasCommonSignerWithCapability(singleSignerDetails, PERMISSION));
+        assertTrue(portalromDetails.hasCommonSignerWithCapability(singleSignerDetails, PERMISSION));
     }
 
     @Test
-    public void hasCommonSignerWithCapabilities_singleSignerInLineageWOCapability_returnsFalse()
+    public void hasCommonSignerWithCapabilities_singleSignerInPortalRomWOCapability_returnsFalse()
             throws Exception {
-        // If a single signer is in the lineage and that previous signer does not have the requested
+        // If a single signer is in the portalrom and that previous signer does not have the requested
         // capability then this method should return false.
-        SigningDetails lineageDetails = createSigningDetailsWithLineageAndCapabilities(
+        SigningDetails portalromDetails = createSigningDetailsWithPortalRomAndCapabilities(
                 new String[]{FIRST_SIGNATURE, SECOND_SIGNATURE},
                 new int[]{SHARED_USER_ID, DEFAULT_CAPABILITIES});
         SigningDetails singleSignerDetails = createSigningDetails(FIRST_SIGNATURE);
 
-        assertFalse(lineageDetails.hasCommonSignerWithCapability(singleSignerDetails, PERMISSION));
+        assertFalse(portalromDetails.hasCommonSignerWithCapability(singleSignerDetails, PERMISSION));
     }
 
     @Test
     public void hasCommonSignerWithCapabilities_singleSignerMatchesCurrentSigner_returnsTrue()
             throws Exception {
-        // If a requesting app is signed by the same current signer as an app with a lineage the
+        // If a requesting app is signed by the same current signer as an app with a portalrom the
         // method should return true since the current signer is granted all capabilities.
-        SigningDetails lineageDetails = createSigningDetailsWithLineageAndCapabilities(
+        SigningDetails portalromDetails = createSigningDetailsWithPortalRomAndCapabilities(
                 new String[]{FIRST_SIGNATURE, SECOND_SIGNATURE},
                 new int[]{SHARED_USER_ID, DEFAULT_CAPABILITIES});
         SigningDetails singleSignerDetails = createSigningDetails(SECOND_SIGNATURE);
 
-        assertTrue(lineageDetails.hasCommonSignerWithCapability(singleSignerDetails, PERMISSION));
+        assertTrue(portalromDetails.hasCommonSignerWithCapability(singleSignerDetails, PERMISSION));
     }
 
     @Test
     public void hasCommonSignerWithCapabilities_divergingSignersWithCommonSigner_returnsTrue()
             throws Exception {
         // This method is intended to allow granting a capability to another app that has a common
-        // signer in the lineage with the capability still granted; this test verifies when the
+        // signer in the portalrom with the capability still granted; this test verifies when the
         // current signers diverge but a common ancestor has the requested capability this method
         // returns true.
-        SigningDetails firstLineageDetails = createSigningDetailsWithLineageAndCapabilities(
+        SigningDetails firstPortalRomDetails = createSigningDetailsWithPortalRomAndCapabilities(
                 new String[]{FIRST_SIGNATURE, SECOND_SIGNATURE, THIRD_SIGNATURE},
                 new int[]{DEFAULT_CAPABILITIES, DEFAULT_CAPABILITIES, DEFAULT_CAPABILITIES});
-        SigningDetails secondLineageDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        SigningDetails secondPortalRomDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE, FOURTH_SIGNATURE);
 
-        assertTrue(firstLineageDetails.hasCommonSignerWithCapability(secondLineageDetails,
+        assertTrue(firstPortalRomDetails.hasCommonSignerWithCapability(secondPortalRomDetails,
                 PERMISSION));
     }
 
     @Test
     public void hasCommonSignerWithCapabilities_divergingSignersOneGrantsCapability_returnsTrue()
             throws Exception {
-        // If apps have multiple common signers in the lineage with one denying the requested
+        // If apps have multiple common signers in the portalrom with one denying the requested
         // capability but the other granting it this method should return true.
-        SigningDetails firstLineageDetails = createSigningDetailsWithLineageAndCapabilities(
+        SigningDetails firstPortalRomDetails = createSigningDetailsWithPortalRomAndCapabilities(
                 new String[]{FIRST_SIGNATURE, SECOND_SIGNATURE, THIRD_SIGNATURE},
                 new int[]{SHARED_USER_ID, DEFAULT_CAPABILITIES, DEFAULT_CAPABILITIES});
-        SigningDetails secondLineageDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        SigningDetails secondPortalRomDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE, FOURTH_SIGNATURE);
 
-        assertTrue(firstLineageDetails.hasCommonSignerWithCapability(secondLineageDetails,
+        assertTrue(firstPortalRomDetails.hasCommonSignerWithCapability(secondPortalRomDetails,
                 PERMISSION));
     }
 
     @Test
     public void hasCommonSignerWithCapabilities_divergingSignersNoneGrantCapability_returnsFalse()
             throws Exception {
-        // If apps have multiple common signers in the lineage with all denying the requested
+        // If apps have multiple common signers in the portalrom with all denying the requested
         // capability this method should return false.
-        SigningDetails firstLineageDetails = createSigningDetailsWithLineageAndCapabilities(
+        SigningDetails firstPortalRomDetails = createSigningDetailsWithPortalRomAndCapabilities(
                 new String[]{FIRST_SIGNATURE, SECOND_SIGNATURE, THIRD_SIGNATURE},
                 new int[]{SHARED_USER_ID, AUTH, DEFAULT_CAPABILITIES});
-        SigningDetails secondLineageDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        SigningDetails secondPortalRomDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE, FOURTH_SIGNATURE);
 
-        assertFalse(firstLineageDetails.hasCommonSignerWithCapability(secondLineageDetails,
+        assertFalse(firstPortalRomDetails.hasCommonSignerWithCapability(secondPortalRomDetails,
                 PERMISSION));
     }
 
@@ -752,50 +752,50 @@ public class SigningDetailsTest {
     public void
             hasCommonSignerWithCapabilities_divergingSignersNoneGrantsAllCapabilities_returnsTrue()
             throws Exception {
-        // If an app has multiple common signers in the lineage, each granting one of the requested
+        // If an app has multiple common signers in the portalrom, each granting one of the requested
         // capabilities but neither granting all this method should return false since a single
         // common ancestor must grant all requested capabilities.
-        SigningDetails firstLineageDetails = createSigningDetailsWithLineageAndCapabilities(
+        SigningDetails firstPortalRomDetails = createSigningDetailsWithPortalRomAndCapabilities(
                 new String[]{FIRST_SIGNATURE, SECOND_SIGNATURE, THIRD_SIGNATURE},
                 new int[]{SHARED_USER_ID, PERMISSION, DEFAULT_CAPABILITIES});
-        SigningDetails secondLineageDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        SigningDetails secondPortalRomDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE, FOURTH_SIGNATURE);
 
-        assertFalse(firstLineageDetails.hasCommonSignerWithCapability(secondLineageDetails,
+        assertFalse(firstPortalRomDetails.hasCommonSignerWithCapability(secondPortalRomDetails,
                 PERMISSION | SHARED_USER_ID));
     }
 
     @Test
-    public void hasCommonSignerWithCapabilities_currentSignerInLineageOfRequestingApp_returnsTrue()
+    public void hasCommonSignerWithCapabilities_currentSignerInPortalRomOfRequestingApp_returnsTrue()
             throws Exception {
-        // If the current signer of an app is in the lineage of the requesting app then this method
+        // If the current signer of an app is in the portalrom of the requesting app then this method
         // should return true since the current signer is granted all capabilities.
-        SigningDetails firstLineageDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        SigningDetails firstPortalRomDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE);
-        SigningDetails secondLineageDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        SigningDetails secondPortalRomDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE, THIRD_SIGNATURE);
 
-        assertTrue(firstLineageDetails.hasCommonSignerWithCapability(secondLineageDetails,
+        assertTrue(firstPortalRomDetails.hasCommonSignerWithCapability(secondPortalRomDetails,
                 PERMISSION));
     }
 
     @Test
-    public void hasCommonSignerWithCapabilities_currentSignerInLineageOfDeclaringApp_returnsTrue()
+    public void hasCommonSignerWithCapabilities_currentSignerInPortalRomOfDeclaringApp_returnsTrue()
             throws Exception {
-        // If the current signer of a requesting app with a lineage is in the lineage of the
+        // If the current signer of a requesting app with a portalrom is in the portalrom of the
         // declaring app and that previous signature is granted the requested capability the method
         // should return true.
-        SigningDetails declaringDetails = createSigningDetailsWithLineageAndCapabilities(
+        SigningDetails declaringDetails = createSigningDetailsWithPortalRomAndCapabilities(
                 new String[]{FIRST_SIGNATURE, SECOND_SIGNATURE, THIRD_SIGNATURE},
                 new int[]{SHARED_USER_ID, DEFAULT_CAPABILITIES, DEFAULT_CAPABILITIES});
-        SigningDetails requestingDetails = createSigningDetailsWithLineage(FIRST_SIGNATURE,
+        SigningDetails requestingDetails = createSigningDetailsWithPortalRom(FIRST_SIGNATURE,
                 SECOND_SIGNATURE);
 
         assertTrue(declaringDetails.hasCommonSignerWithCapability(requestingDetails, PERMISSION));
     }
 
     @Test
-    public void hasCommonSignerWithCapabilities_oneSignerNullLineage_returns() throws Exception {
+    public void hasCommonSignerWithCapabilities_oneSignerNullPortalRom_returns() throws Exception {
         // While the pastSigningCertificates should only be null in the case of multiple current
         // signers there are instances where this can be null with a single signer; verify that a
         // null pastSigningCertificates array in either SigningDetails does not result in a
@@ -892,32 +892,32 @@ public class SigningDetailsTest {
     }
 
     @Test
-    public void hasAncestorOrSelfWithDigest_lineageSignerInSet_returnsTrue() throws Exception {
-        // If an app has a rotated signing key and a previous key in the lineage is in the digest
+    public void hasAncestorOrSelfWithDigest_portalromSignerInSet_returnsTrue() throws Exception {
+        // If an app has a rotated signing key and a previous key in the portalrom is in the digest
         // Set then this method should return true.
-        SigningDetails details = createSigningDetailsWithLineage(FIRST_SIGNATURE, SECOND_SIGNATURE);
+        SigningDetails details = createSigningDetailsWithPortalRom(FIRST_SIGNATURE, SECOND_SIGNATURE);
         Set<String> digests = createDigestSet(FIRST_SIGNATURE, THIRD_SIGNATURE);
 
         assertTrue(details.hasAncestorOrSelfWithDigest(digests));
     }
 
     @Test
-    public void hasAncestorOrSelfWithDigest_lineageSignerNotInSet_returnsFalse() throws Exception {
+    public void hasAncestorOrSelfWithDigest_portalromSignerNotInSet_returnsFalse() throws Exception {
         // If an app has a rotated signing key, but neither the current key nor any of the signers
-        // in the lineage are in the digest set then the method should return false.
-        SigningDetails details = createSigningDetailsWithLineage(FIRST_SIGNATURE, SECOND_SIGNATURE);
+        // in the portalrom are in the digest set then the method should return false.
+        SigningDetails details = createSigningDetailsWithPortalRom(FIRST_SIGNATURE, SECOND_SIGNATURE);
         Set<String> digests = createDigestSet(THIRD_SIGNATURE, FOURTH_SIGNATURE);
 
         assertFalse(details.hasAncestorOrSelfWithDigest(digests));
     }
 
     @Test
-    public void hasAncestorOrSelfWithDigest_lastSignerInLineageInSet_returnsTrue()
+    public void hasAncestorOrSelfWithDigest_lastSignerInPortalRomInSet_returnsTrue()
             throws Exception {
-        // If an app has multiple signers in the lineage only one of those signers must be in the
-        // Set for this method to return true. This test verifies if the last signer in the lineage
+        // If an app has multiple signers in the portalrom only one of those signers must be in the
+        // Set for this method to return true. This test verifies if the last signer in the portalrom
         // is in the set then the method returns true.
-        SigningDetails details = createSigningDetailsWithLineage(FIRST_SIGNATURE, SECOND_SIGNATURE,
+        SigningDetails details = createSigningDetailsWithPortalRom(FIRST_SIGNATURE, SECOND_SIGNATURE,
                 THIRD_SIGNATURE);
         Set<String> digests = createDigestSet(SECOND_SIGNATURE);
 
@@ -925,10 +925,10 @@ public class SigningDetailsTest {
     }
 
     @Test
-    public void hasAncestorOrSelfWithDigest_nullLineageSingleSIgner_returnsFalse()
+    public void hasAncestorOrSelfWithDigest_nullPortalRomSingleSIgner_returnsFalse()
             throws Exception {
-        // Under some instances an app with only a single signer can have a null lineage; this
-        // test verifies that null lineage does not result in a NullPointerException and instead the
+        // Under some instances an app with only a single signer can have a null portalrom; this
+        // test verifies that null portalrom does not result in a NullPointerException and instead the
         // method returns false if the single signer is not in the Set.
         SigningDetails details = createSigningDetails(true, FIRST_SIGNATURE);
         Set<String> digests = createDigestSet(SECOND_SIGNATURE, THIRD_SIGNATURE);
@@ -936,15 +936,15 @@ public class SigningDetailsTest {
         assertFalse(details.hasAncestorOrSelfWithDigest(digests));
     }
 
-    private SigningDetails createSigningDetailsWithLineage(String... signers) throws Exception {
+    private SigningDetails createSigningDetailsWithPortalRom(String... signers) throws Exception {
         int[] capabilities = new int[signers.length];
         for (int i = 0; i < capabilities.length; i++) {
             capabilities[i] = DEFAULT_CAPABILITIES;
         }
-        return createSigningDetailsWithLineageAndCapabilities(signers, capabilities);
+        return createSigningDetailsWithPortalRomAndCapabilities(signers, capabilities);
     }
 
-    private SigningDetails createSigningDetailsWithLineageAndCapabilities(String[] signers,
+    private SigningDetails createSigningDetailsWithPortalRomAndCapabilities(String[] signers,
             int[] capabilities) throws Exception {
         if (capabilities.length != signers.length) {
             fail("The capabilities array must contain the same number of elements as the signers "
@@ -987,7 +987,7 @@ public class SigningDetailsTest {
         return digests;
     }
 
-    private void assertSigningDetailsContainsLineage(SigningDetails details,
+    private void assertSigningDetailsContainsPortalRom(SigningDetails details,
             String... pastSigners) {
         // This method should only be invoked for results that contain a single signer.
         assertEquals(1, details.signatures.length);

@@ -33,7 +33,7 @@ import android.os.UserHandle;
 import android.os.UserManager;
 import android.provider.Settings;
 
-import lineageos.providers.LineageSettings;
+import portalrom.providers.PortalRomSettings;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -120,7 +120,7 @@ final public class SettingsService extends Binder {
         String mTag = null;
         int mResetMode = -1;
         boolean mMakeDefault;
-        boolean mUseLineageSettingsProvider;
+        boolean mUsePortalRomSettingsProvider;
 
         MyShellCommand(SettingsProvider provider, boolean dumping) {
             mProvider = provider;
@@ -128,14 +128,14 @@ final public class SettingsService extends Binder {
         }
 
         private String getSettingsAuthority() {
-            return mUseLineageSettingsProvider ? LineageSettings.AUTHORITY : Settings.AUTHORITY;
+            return mUsePortalRomSettingsProvider ? PortalRomSettings.AUTHORITY : Settings.AUTHORITY;
         }
 
         private String getCallMethod(String callMethod) {
             final PrintWriter perr = getErrPrintWriter();
 
             try {
-                Class clazz = mUseLineageSettingsProvider ? LineageSettings.class : Settings.class;
+                Class clazz = mUsePortalRomSettingsProvider ? PortalRomSettings.class : Settings.class;
                 Field field = clazz.getField(callMethod);
                 if (field.getType() == String.class) {
                     return (String) field.get(null);
@@ -171,8 +171,8 @@ final public class SettingsService extends Binder {
                         perr.println("Invalid user: all");
                         return -1;
                     }
-                } else if ("--lineage".equals(arg)) {
-                    mUseLineageSettingsProvider = true;
+                } else if ("--portalrom".equals(arg)) {
+                    mUsePortalRomSettingsProvider = true;
                 } else if (mVerb == CommandVerb.UNSPECIFIED) {
                     if ("get".equalsIgnoreCase(arg)) {
                         mVerb = CommandVerb.GET;
@@ -533,18 +533,18 @@ final public class SettingsService extends Binder {
                 pw.println("Settings provider (settings) commands:");
                 pw.println("  help");
                 pw.println("      Print this help text.");
-                pw.println("  get [--user <USER_ID> | current] [--lineage] NAMESPACE KEY");
+                pw.println("  get [--user <USER_ID> | current] [--portalrom] NAMESPACE KEY");
                 pw.println("      Retrieve the current value of KEY.");
-                pw.println("  put [--user <USER_ID> | current] [--lineage] NAMESPACE KEY VALUE [TAG] [default]");
+                pw.println("  put [--user <USER_ID> | current] [--portalrom] NAMESPACE KEY VALUE [TAG] [default]");
                 pw.println("      Change the contents of KEY to VALUE.");
                 pw.println("      TAG to associate with the setting.");
                 pw.println("      {default} to set as the default, case-insensitive only for global/secure namespace");
-                pw.println("  delete [--user <USER_ID> | current] [--lineage] NAMESPACE KEY");
+                pw.println("  delete [--user <USER_ID> | current] [--portalrom] NAMESPACE KEY");
                 pw.println("      Delete the entry for KEY.");
-                pw.println("  reset [--user <USER_ID> | current] [--lineage] NAMESPACE {PACKAGE_NAME | RESET_MODE}");
+                pw.println("  reset [--user <USER_ID> | current] [--portalrom] NAMESPACE {PACKAGE_NAME | RESET_MODE}");
                 pw.println("      Reset the global/secure table for a package with mode.");
                 pw.println("      RESET_MODE is one of {untrusted_defaults, untrusted_clear, trusted_defaults}, case-insensitive");
-                pw.println("  list [--user <USER_ID> | current] [--lineage] NAMESPACE");
+                pw.println("  list [--user <USER_ID> | current] [--portalrom] NAMESPACE");
                 pw.println("      Print all defined keys.");
                 pw.println("      NAMESPACE is one of {system, secure, global}, case-insensitive");
             }

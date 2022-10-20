@@ -2485,7 +2485,7 @@ public class PackageManagerTests extends AndroidTestCase {
     public void testCheckSignaturesRotatedAgainstOriginal() throws Exception {
         // checkSignatures should be backwards compatible with pre-rotation behavior; this test
         // verifies that an app signed with a rotated key results in a signature match with an app
-        // signed with the original key in the lineage.
+        // signed with the original key in the portalrom.
         int apk1 = APP1_CERT5;
         int apk2 = APP2_CERT5_ROTATED_CERT6;
         checkSignatures(apk1, apk2, PackageManager.SIGNATURE_MATCH);
@@ -2553,7 +2553,7 @@ public class PackageManagerTests extends AndroidTestCase {
                 // TODO: All checkSignatures tests should return the same result regardless of
                 // querying by package name or uid; however if there are any edge cases where
                 // individual packages within a shareduid are compared with signatures that do not
-                // match the full lineage of the shareduid this method should be overloaded to
+                // match the full portalrom of the shareduid this method should be overloaded to
                 // accept the expected response for the uid query.
                 PackageManager pm = getPm();
                 int matchByName = pm.checkSignatures(pkg1.getPackageName(), pkg2.getPackageName());

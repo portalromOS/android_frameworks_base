@@ -121,7 +121,7 @@ import com.android.server.LocalServices;
 import com.android.server.Watchdog;
 import com.android.server.policy.WindowManagerPolicy;
 
-import lineageos.providers.LineageSettings;
+import portalrom.providers.PortalRomSettings;
 
 import libcore.io.IoUtils;
 import libcore.io.Streams;
@@ -2079,8 +2079,8 @@ public class InputManagerService extends IInputManager.Stub
 
     public void registerVolumeKeysRotationSettingObserver() {
         mContext.getContentResolver().registerContentObserver(
-                LineageSettings.System.getUriFor(
-                        LineageSettings.System.SWAP_VOLUME_KEYS_ON_ROTATION), false,
+                PortalRomSettings.System.getUriFor(
+                        PortalRomSettings.System.SWAP_VOLUME_KEYS_ON_ROTATION), false,
                 new ContentObserver(mHandler) {
                     @Override
                     public void onChange(boolean selfChange) {
@@ -2092,9 +2092,9 @@ public class InputManagerService extends IInputManager.Stub
     private int getVolumeKeysRotationSetting(int defaultValue) {
         int result = defaultValue;
         try {
-            result = LineageSettings.System.getIntForUser(mContext.getContentResolver(),
-                    LineageSettings.System.SWAP_VOLUME_KEYS_ON_ROTATION, UserHandle.USER_CURRENT);
-        } catch (LineageSettings.LineageSettingNotFoundException snfe) {
+            result = PortalRomSettings.System.getIntForUser(mContext.getContentResolver(),
+                    PortalRomSettings.System.SWAP_VOLUME_KEYS_ON_ROTATION, UserHandle.USER_CURRENT);
+        } catch (PortalRomSettings.PortalRomSettingNotFoundException snfe) {
         }
         return result;
     }

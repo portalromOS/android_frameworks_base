@@ -3544,7 +3544,7 @@ public class PermissionManagerService extends IPermissionManager.Stub {
         //     - or its signing certificate was rotated from the source package's certificate
         //     - or its signing certificate is a previous signing certificate of the defining
         //       package, and the defining package still trusts the old certificate for permissions
-        //     - or it shares a common signing certificate in its lineage with the defining package,
+        //     - or it shares a common signing certificate in its portalrom with the defining package,
         //       and the defining package still trusts the old certificate for permissions
         //     - or it shares the above relationships with the system package
         final PackageParser.SigningDetails sourceSigningDetails =

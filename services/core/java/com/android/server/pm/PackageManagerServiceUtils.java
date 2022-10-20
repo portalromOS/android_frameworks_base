@@ -689,8 +689,8 @@ public class PackageManagerServiceUtils {
                             parsedSignatures,
                             PackageParser.SigningDetails.CertCapabilities.SHARED_USER_ID);
             // Special case: if the sharedUserId capability check failed it could be due to this
-            // being the only package in the sharedUserId so far and the lineage being updated to
-            // deny the sharedUserId capability of the previous key in the lineage.
+            // being the only package in the sharedUserId so far and the portalrom being updated to
+            // deny the sharedUserId capability of the previous key in the portalrom.
             if (!match && pkgSetting.getSharedUser().packages.size() == 1
                     && pkgSetting.getSharedUser().packages.valueAt(0).name.equals(packageName)) {
                 match = true;
@@ -717,10 +717,10 @@ public class PackageManagerServiceUtils {
                         + " has no signatures that match those in shared user "
                         + pkgSetting.getSharedUser().name + "; ignoring!");
             }
-            // It is possible that this package contains a lineage that blocks sharedUserId access
+            // It is possible that this package contains a portalrom that blocks sharedUserId access
             // to an already installed package in the sharedUserId signed with a previous key.
             // Iterate over all of the packages in the sharedUserId and ensure any that are signed
-            // with a key in this package's lineage have the SHARED_USER_ID capability granted.
+            // with a key in this package's portalrom have the SHARED_USER_ID capability granted.
             if (parsedSignatures.hasPastSigningCertificates()) {
                 for (PackageSetting shUidPkgSetting : pkgSetting.getSharedUser().packages) {
                     // if the current package in the sharedUserId is the package being updated then
@@ -732,7 +732,7 @@ public class PackageManagerServiceUtils {
                     PackageParser.SigningDetails shUidSigningDetails =
                             shUidPkgSetting.getSigningDetails();
                     // The capability check only needs to be performed against the package if it is
-                    // signed with a key that is in the lineage of the package being installed.
+                    // signed with a key that is in the portalrom of the package being installed.
                     if (parsedSignatures.hasAncestor(shUidSigningDetails)) {
                         if (!parsedSignatures.checkCapability(shUidSigningDetails,
                                 PackageParser.SigningDetails.CertCapabilities.SHARED_USER_ID)) {
@@ -745,13 +745,13 @@ public class PackageManagerServiceUtils {
                     }
                 }
             }
-            // If the lineage of this package diverges from the lineage of the sharedUserId then
+            // If the portalrom of this package diverges from the portalrom of the sharedUserId then
             // do not allow the installation to proceed.
             if (!parsedSignatures.hasCommonAncestor(
                     pkgSetting.getSharedUser().signatures.mSigningDetails)) {
                 throw new PackageManagerException(INSTALL_FAILED_SHARED_USER_INCOMPATIBLE,
-                        "Package " + packageName + " has a signing lineage "
-                                + "that diverges from the lineage of the sharedUserId");
+                        "Package " + packageName + " has a signing portalrom "
+                                + "that diverges from the portalrom of the sharedUserId");
             }
         }
         return compatMatch;

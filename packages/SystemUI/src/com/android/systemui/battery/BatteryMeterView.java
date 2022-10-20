@@ -17,7 +17,7 @@ package com.android.systemui.battery;
 
 import static com.android.systemui.DejankUtils.whitelistIpcs;
 
-import static lineageos.providers.LineageSettings.System.STATUS_BAR_SHOW_BATTERY_PERCENT;
+import static portalrom.providers.PortalRomSettings.System.STATUS_BAR_SHOW_BATTERY_PERCENT;
 
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
@@ -54,7 +54,7 @@ import com.android.systemui.plugins.DarkIconDispatcher;
 import com.android.systemui.plugins.DarkIconDispatcher.DarkReceiver;
 import com.android.systemui.statusbar.policy.BatteryController;
 
-import lineageos.providers.LineageSettings;
+import portalrom.providers.PortalRomSettings;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -290,7 +290,7 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
     void updateShowPercent() {
         final boolean showing = mBatteryPercentView != null;
         // TODO(b/140051051)
-        final int showBatteryPercent = LineageSettings.System.getIntForUser(
+        final int showBatteryPercent = PortalRomSettings.System.getIntForUser(
                 getContext().getContentResolver(), STATUS_BAR_SHOW_BATTERY_PERCENT, 0,
                 UserHandle.USER_CURRENT);
         final boolean drawPercentInside = mShowPercentMode == MODE_DEFAULT &&
@@ -401,8 +401,8 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
     }
 
     private int getBatteryStyle() {
-        return LineageSettings.System.getIntForUser(getContext().getContentResolver(),
-                LineageSettings.System.STATUS_BAR_BATTERY_STYLE, BATTERY_STYLE_PORTRAIT,
+        return PortalRomSettings.System.getIntForUser(getContext().getContentResolver(),
+                PortalRomSettings.System.STATUS_BAR_BATTERY_STYLE, BATTERY_STYLE_PORTRAIT,
                 UserHandle.USER_CURRENT);
     }
 

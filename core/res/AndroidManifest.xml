@@ -709,12 +709,12 @@
     <protected-broadcast android:name="android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED" />
     <protected-broadcast android:name="android.app.action.SHOW_NEW_USER_DISCLAIMER" />
 
-    <!-- LineageOS additions -->
+    <!-- PortalRomOS additions -->
 
     <!-- Used to launch a common app (FlipFlap) for devices with flip cover. -->
-    <protected-broadcast android:name="lineageos.intent.action.LID_STATE_CHANGED" />
+    <protected-broadcast android:name="portalrom.intent.action.LID_STATE_CHANGED" />
 
-    <!-- LineageOS additions -->
+    <!-- PortalRomOS additions -->
 
     <!-- Used for long press power torch feature - automatic turn off on timeout -->
     <protected-broadcast android:name="com.android.server.policy.PhoneWindowManager.ACTION_TORCH_OFF" />

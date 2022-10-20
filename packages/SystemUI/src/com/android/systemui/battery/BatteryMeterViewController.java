@@ -15,8 +15,8 @@
  */
 package com.android.systemui.battery;
 
-import static lineageos.providers.LineageSettings.System.STATUS_BAR_BATTERY_STYLE;
-import static lineageos.providers.LineageSettings.System.STATUS_BAR_SHOW_BATTERY_PERCENT;
+import static portalrom.providers.PortalRomSettings.System.STATUS_BAR_BATTERY_STYLE;
+import static portalrom.providers.PortalRomSettings.System.STATUS_BAR_SHOW_BATTERY_PERCENT;
 
 import android.app.ActivityManager;
 import android.content.ContentResolver;
@@ -37,7 +37,7 @@ import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.tuner.TunerService;
 import com.android.systemui.util.ViewController;
 
-import lineageos.providers.LineageSettings;
+import portalrom.providers.PortalRomSettings;
 
 import javax.inject.Inject;
 
@@ -180,12 +180,12 @@ public class BatteryMeterViewController extends ViewController<BatteryMeterView>
 
     private void registerShowBatteryPercentObserver(int user) {
         mContentResolver.registerContentObserver(
-                LineageSettings.System.getUriFor(STATUS_BAR_SHOW_BATTERY_PERCENT),
+                PortalRomSettings.System.getUriFor(STATUS_BAR_SHOW_BATTERY_PERCENT),
                 false,
                 mSettingObserver,
                 user);
         mContentResolver.registerContentObserver(
-                LineageSettings.System.getUriFor(STATUS_BAR_BATTERY_STYLE),
+                PortalRomSettings.System.getUriFor(STATUS_BAR_BATTERY_STYLE),
                 false,
                 mSettingObserver,
                 user);

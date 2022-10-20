@@ -177,7 +177,7 @@ import com.android.server.statusbar.StatusBarManagerInternal;
 import com.android.server.wallpaper.WallpaperManagerInternal;
 import com.android.server.wm.InputMonitor.EventReceiverInputConsumer;
 
-import lineageos.providers.LineageSettings;
+import portalrom.providers.PortalRomSettings;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -459,8 +459,8 @@ public class DisplayPolicy {
             super(handler);
 
             ContentResolver resolver = mContext.getContentResolver();
-            resolver.registerContentObserver(LineageSettings.System.getUriFor(
-                    LineageSettings.System.FORCE_SHOW_NAVBAR), false, this,
+            resolver.registerContentObserver(PortalRomSettings.System.getUriFor(
+                    PortalRomSettings.System.FORCE_SHOW_NAVBAR), false, this,
                     UserHandle.USER_ALL);
 
             updateSettings();
@@ -770,8 +770,8 @@ public class DisplayPolicy {
     public void updateSettings() {
         ContentResolver resolver = mContext.getContentResolver();
 
-        mForceNavbar = LineageSettings.System.getIntForUser(resolver,
-                LineageSettings.System.FORCE_SHOW_NAVBAR, 0,
+        mForceNavbar = PortalRomSettings.System.getIntForUser(resolver,
+                PortalRomSettings.System.FORCE_SHOW_NAVBAR, 0,
                 UserHandle.USER_CURRENT);
     }
 

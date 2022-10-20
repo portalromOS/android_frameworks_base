@@ -72,7 +72,7 @@ import com.android.server.lights.LightsManager;
 import com.android.server.lights.LogicalLight;
 import com.android.server.policy.WindowManagerPolicy;
 
-import lineageos.providers.LineageSettings;
+import portalrom.providers.PortalRomSettings;
 
 import java.io.PrintWriter;
 
@@ -858,7 +858,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
                 Settings.System.getUriFor(Settings.System.SCREEN_AUTO_BRIGHTNESS_ADJ),
                 false /*notifyForDescendants*/, mSettingsObserver, UserHandle.USER_ALL);
         mContext.getContentResolver().registerContentObserver(
-                LineageSettings.System.getUriFor(LineageSettings.System.AUTO_BRIGHTNESS_ONE_SHOT),
+                PortalRomSettings.System.getUriFor(PortalRomSettings.System.AUTO_BRIGHTNESS_ONE_SHOT),
                 false /*notifyForDescendants*/, mSettingsObserver, UserHandle.USER_ALL);
     }
 
@@ -2070,8 +2070,8 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
     }
 
     private boolean getAutoBrightnessOneShotSetting() {
-        return LineageSettings.System.getIntForUser(
-                mContext.getContentResolver(), LineageSettings.System.AUTO_BRIGHTNESS_ONE_SHOT,
+        return PortalRomSettings.System.getIntForUser(
+                mContext.getContentResolver(), PortalRomSettings.System.AUTO_BRIGHTNESS_ONE_SHOT,
                 0, UserHandle.USER_CURRENT) == 1;
     }
 

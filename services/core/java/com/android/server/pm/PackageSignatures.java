@@ -174,7 +174,7 @@ class PackageSignatures {
                                 if (index >= 0 && index < readSignatures.size()) {
                                     Signature sig = readSignatures.get(index);
                                     if (sig != null) {
-                                        // An app using a shared signature in its signing lineage
+                                        // An app using a shared signature in its signing portalrom
                                         // can have unique capabilities assigned to this previous
                                         // signer; create a new instance of this Signature to ensure
                                         // its flags do not overwrite those of the instance from

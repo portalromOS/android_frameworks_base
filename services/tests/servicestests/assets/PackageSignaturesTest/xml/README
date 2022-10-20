@@ -41,15 +41,15 @@ error paths for the PackageSignaturesTest.
 
 Step 2 can be modified to sign with multiple signers by running one of the following commands:
 
-- To sign with two signers in the lineage (after the signing key has been rotated once):
+- To sign with two signers in the portalrom (after the signing key has been rotated once):
 apksigner sign --in ${OUT}/data/app/CtsPkgInstallTinyApp/CtsPkgInstallTinyApp.apk --out test.apk \
   --cert certs/ec-p256.x509.der --key certs/ec-p256.pk8 --next-signer --cert \
-  certs/ec-p256_2.x509.der --key certs/ec-p256_2.pk8 --lineage certs/ec-p256-lineage-2-signers
+  certs/ec-p256_2.x509.der --key certs/ec-p256_2.pk8 --portalrom certs/ec-p256-portalrom-2-signers
 
-- To sign with three signers in the lineage (after the second key rotation):
+- To sign with three signers in the portalrom (after the second key rotation):
 apksigner sign --in ${OUT}/data/app/CtsPkgInstallTinyApp/CtsPkgInstallTinyApp.apk --out test.apk \
   --cert certs/ec-p256.x509.der --key certs/ec-p256.pk8 --next-signer --cert \
-  certs/ec-p256_3.x509.der --key certs/ec-p256_3.pk8 --lineage certs/ec-p256-lineage-3-signers
+  certs/ec-p256_3.x509.der --key certs/ec-p256_3.pk8 --portalrom certs/ec-p256-portalrom-3-signers
 
 - To sign with two distinct signers (NOTE: The V3 signature scheme only supports a single signer,
   so this method can only be used with signature schemes V1 and V2):

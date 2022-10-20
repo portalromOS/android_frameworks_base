@@ -200,8 +200,8 @@ public class SourceStampVerifierTest {
     }
 
     @Test
-    public void testSourceStamp_validStampLineage() throws Exception {
-        mPrimaryApk = getApk("SourceStampVerifierTest/stamp-lineage-valid.apk");
+    public void testSourceStamp_validStampPortalRom() throws Exception {
+        mPrimaryApk = getApk("SourceStampVerifierTest/stamp-portalrom-valid.apk");
         byte[] expectedStampCertHash = getSourceStampCertificateHashFromApk(mPrimaryApk);
 
         SourceStampVerificationResult result =
@@ -213,14 +213,14 @@ public class SourceStampVerifierTest {
         byte[] actualStampCertHash =
                 MessageDigest.getInstance("SHA-256").digest(result.getCertificate().getEncoded());
         assertArrayEquals(expectedStampCertHash, actualStampCertHash);
-        assertEquals(2, result.getCertificateLineage().size());
+        assertEquals(2, result.getCertificatePortalRom().size());
         assertEquals(result.getCertificate(),
-                result.getCertificateLineage().get(result.getCertificateLineage().size() - 1));
+                result.getCertificatePortalRom().get(result.getCertificatePortalRom().size() - 1));
     }
 
     @Test
-    public void testSourceStamp_invalidStampLineage() throws Exception {
-        mPrimaryApk = getApk("SourceStampVerifierTest/stamp-lineage-invalid.apk");
+    public void testSourceStamp_invalidStampPortalRom() throws Exception {
+        mPrimaryApk = getApk("SourceStampVerifierTest/stamp-portalrom-invalid.apk");
 
         SourceStampVerificationResult result =
                 SourceStampVerifier.verify(mPrimaryApk.getAbsolutePath());
@@ -228,7 +228,7 @@ public class SourceStampVerifierTest {
         assertTrue(result.isPresent());
         assertFalse(result.isVerified());
         assertNull(result.getCertificate());
-        assertTrue(result.getCertificateLineage().isEmpty());
+        assertTrue(result.getCertificatePortalRom().isEmpty());
     }
 
     private File getApk(String apkPath) throws IOException {

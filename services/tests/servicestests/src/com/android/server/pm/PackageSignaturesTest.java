@@ -57,8 +57,8 @@ public class PackageSignaturesTest {
 
     // These signatures are the DER encoding of the ec-p256[_X] X509 certificates in the certs/
     // directory. The apksigner tool was used to sign a test APK with these certificates and the
-    // corresponding ec-p256{_X].pk8 private key file. For the lineage tests the
-    // ec-p256-lineage-X-signers file was provided as the parameter to the --lineage option when
+    // corresponding ec-p256{_X].pk8 private key file. For the portalrom tests the
+    // ec-p256-portalrom-X-signers file was provided as the parameter to the --portalrom option when
     // signing the APK. The APK was then installed on a test device, the packages.xml file was
     // pulled from the device, and the APK's <sig> tag was used as the basis for these tests.
     // For more details see the README under the xml/ directory.
@@ -93,9 +93,9 @@ public class PackageSignaturesTest {
             + "030203470030440220256bdaa2784c273e4cc291a595a46779dee9de9044dc9f7ab820309567df9fe902"
             + "201a4ad8c69891b5a8c47434fe9540ed1f4979b5fad3483f3fa04d5677355a579e";
 
-    // When running tests using the pastSigs tag / lineage the past signers and their capabilities
+    // When running tests using the pastSigs tag / portalrom the past signers and their capabilities
     // should be returned in the SigningDetails. The flags attribute of the cert tag under the
-    // pastSigs tag contains these capabilities; for tests that verify the lineage the capabilities
+    // pastSigs tag contains these capabilities; for tests that verify the portalrom the capabilities
     // of the signers should be set to the values in this Map.
     private static final Map<String, Integer> SIGNATURE_TO_CAPABILITY_MAP;
 
@@ -151,13 +151,13 @@ public class PackageSignaturesTest {
     }
 
     @Test
-    public void testReadXmlWithSigningLineage() throws Exception {
+    public void testReadXmlWithSigningPortalRom() throws Exception {
         // Verifies the good path of reading a single sigs tag including pastSigs with the
-        // signing lineage returns the expected signatures and lineage for two and three signers
-        // in the lineage.
-        verifyReadXmlReturnsExpectedSignaturesAndLineage("xml/two-signers-in-lineage.xml", 3,
+        // signing portalrom returns the expected signatures and portalrom for two and three signers
+        // in the portalrom.
+        verifyReadXmlReturnsExpectedSignaturesAndPortalRom("xml/two-signers-in-portalrom.xml", 3,
                 FIRST_EXPECTED_SIGNATURE, SECOND_EXPECTED_SIGNATURE);
-        verifyReadXmlReturnsExpectedSignaturesAndLineage("xml/three-signers-in-lineage.xml", 3,
+        verifyReadXmlReturnsExpectedSignaturesAndPortalRom("xml/three-signers-in-portalrom.xml", 3,
                 FIRST_EXPECTED_SIGNATURE, SECOND_EXPECTED_SIGNATURE, THIRD_EXPECTED_SIGNATURE);
     }
 
@@ -193,11 +193,11 @@ public class PackageSignaturesTest {
     }
 
     @Test
-    public void testReadXmlWithSigningLineageWithMissingSchemeVersion() throws Exception {
-        // Verifies if the scheme version cannot be read the signers in the lineage can still be
+    public void testReadXmlWithSigningPortalRomWithMissingSchemeVersion() throws Exception {
+        // Verifies if the scheme version cannot be read the signers in the portalrom can still be
         // obtained.
-        verifyReadXmlReturnsExpectedSignaturesAndLineage(
-                "xml/three-signers-in-lineage-missing-scheme-version.xml",
+        verifyReadXmlReturnsExpectedSignaturesAndPortalRom(
+                "xml/three-signers-in-portalrom-missing-scheme-version.xml",
                 PackageParser.SigningDetails.SignatureSchemeVersion.UNKNOWN,
                 FIRST_EXPECTED_SIGNATURE, SECOND_EXPECTED_SIGNATURE, THIRD_EXPECTED_SIGNATURE);
     }
@@ -267,7 +267,7 @@ public class PackageSignaturesTest {
         // Verifies if the pastSigs tag contains an invalid count attribute the current signature
         // is still returned; in this case the third expected signature is the most recent signer.
         verifyReadXmlReturnsExpectedSignatures(
-                "xml/three-signers-in-lineage-invalid-pastSigs-count.xml", 3,
+                "xml/three-signers-in-portalrom-invalid-pastSigs-count.xml", 3,
                 THIRD_EXPECTED_SIGNATURE);
     }
 
@@ -275,8 +275,8 @@ public class PackageSignaturesTest {
     public void testReadXmlWithMissingPastSigsCount() throws Exception {
         // Verifies if the pastSigs tag is missing the count attribute the current signature is
         // still returned; in this case the third expected signature is the most recent signer.
-        verifyReadXmlReturnsExpectedSignaturesAndLineage(
-                "xml/three-signers-in-lineage-missing-pastSigs-count.xml", 3,
+        verifyReadXmlReturnsExpectedSignaturesAndPortalRom(
+                "xml/three-signers-in-portalrom-missing-pastSigs-count.xml", 3,
                 THIRD_EXPECTED_SIGNATURE);
     }
 
@@ -284,8 +284,8 @@ public class PackageSignaturesTest {
     public void testReadXmlWithInvalidCertFlags() throws Exception {
         // Verifies if the cert tag contains an invalid flags attribute the expected signatures
         // are still returned, although since the flags could not be read these signatures will not
-        // include the capabilities of the previous signers in the lineage.
-        verifyReadXmlReturnsExpectedSignatures("xml/two-signers-in-lineage-invalid-certs-flags.xml",
+        // include the capabilities of the previous signers in the portalrom.
+        verifyReadXmlReturnsExpectedSignatures("xml/two-signers-in-portalrom-invalid-certs-flags.xml",
                 3, FIRST_EXPECTED_SIGNATURE, SECOND_EXPECTED_SIGNATURE);
     }
 
@@ -293,8 +293,8 @@ public class PackageSignaturesTest {
     public void testReadXmlWithMissingCertFlags() throws Exception {
         // Verifies if the cert tag does not contain a flags attribute the expected signatures are
         // still returned, although since there are no flags to read these signatures will not
-        // include the capabilities of the previous signers in the lineage.
-        verifyReadXmlReturnsExpectedSignatures("xml/two-signers-in-lineage-missing-certs-flags.xml",
+        // include the capabilities of the previous signers in the portalrom.
+        verifyReadXmlReturnsExpectedSignatures("xml/two-signers-in-portalrom-missing-certs-flags.xml",
                 3, FIRST_EXPECTED_SIGNATURE, SECOND_EXPECTED_SIGNATURE);
     }
 
@@ -302,9 +302,9 @@ public class PackageSignaturesTest {
     public void testReadXmlWithMultiplePastSigsTags() throws Exception {
         // Verifies if multiple pastSigs tags are found under the sigs tag the additional pastSigs
         // tag is ignored and the expected signatures are returned along with the previous signer in
-        // the lineage.
-        verifyReadXmlReturnsExpectedSignaturesAndLineage(
-                "xml/two-signers-in-lineage-multiple-pastSigs-tags.xml", 3,
+        // the portalrom.
+        verifyReadXmlReturnsExpectedSignaturesAndPortalRom(
+                "xml/two-signers-in-portalrom-multiple-pastSigs-tags.xml", 3,
                 FIRST_EXPECTED_SIGNATURE, SECOND_EXPECTED_SIGNATURE);
     }
 
@@ -312,8 +312,8 @@ public class PackageSignaturesTest {
     public void testReadXmlWithInvalidPastSigsCertIndex() throws Exception {
         // If the pastSigs cert tag contains an invalid index attribute that signature cannot be
         // read but the current signature should still be returned.
-        verifyReadXmlReturnsExpectedSignaturesAndLineage(
-                "xml/two-signers-in-lineage-invalid-pastSigs-cert-index.xml", 3,
+        verifyReadXmlReturnsExpectedSignaturesAndPortalRom(
+                "xml/two-signers-in-portalrom-invalid-pastSigs-cert-index.xml", 3,
                 SECOND_EXPECTED_SIGNATURE);
     }
 
@@ -321,8 +321,8 @@ public class PackageSignaturesTest {
     public void testReadXmlWithMissingPastSigsCertIndex() throws Exception {
         // If the pastSigs cert tag does not contain an index attribute that signature cannot be
         // read but the current signature should still be returned.
-        verifyReadXmlReturnsExpectedSignaturesAndLineage(
-                "xml/two-signers-in-lineage-missing-pastSigs-cert-index.xml", 3,
+        verifyReadXmlReturnsExpectedSignaturesAndPortalRom(
+                "xml/two-signers-in-portalrom-missing-pastSigs-cert-index.xml", 3,
                 SECOND_EXPECTED_SIGNATURE);
     }
 
@@ -333,7 +333,7 @@ public class PackageSignaturesTest {
         // then the current signature cannot be read but any other signatures should still be
         // returned.
         verifyReadXmlReturnsExpectedSignatures(
-                "xml/two-signers-in-lineage-undefined-pastSigs-index.xml", 3,
+                "xml/two-signers-in-portalrom-undefined-pastSigs-index.xml", 3,
                 FIRST_EXPECTED_SIGNATURE, null);
     }
 
@@ -342,9 +342,9 @@ public class PackageSignaturesTest {
         // If the number of cert tags is less than that specified in the count attribute of the
         // pastSigs tag then the signatures that could be read are copied to a smaller array to be
         // used when building the SigningDetails object. This test verifies if there are too few
-        // cert tags the available signatures and lineage can still be obtained.
-        verifyReadXmlReturnsExpectedSignaturesAndLineage(
-                "xml/three-signers-in-lineage-missing-pastSigs-cert-tag.xml", 3,
+        // cert tags the available signatures and portalrom can still be obtained.
+        verifyReadXmlReturnsExpectedSignaturesAndPortalRom(
+                "xml/three-signers-in-portalrom-missing-pastSigs-cert-tag.xml", 3,
                 FIRST_EXPECTED_SIGNATURE, THIRD_EXPECTED_SIGNATURE);
     }
 
@@ -353,7 +353,7 @@ public class PackageSignaturesTest {
         // When rotating the signing key a developer is able to specify the capabilities granted to
         // the apps signed with the previous key. This test verifies a previous signing certificate
         // with the flags set to 0 does not have any capabilities.
-        TypedXmlPullParser parser = getXMLFromResources("xml/two-signers-in-lineage-no-caps.xml");
+        TypedXmlPullParser parser = getXMLFromResources("xml/two-signers-in-portalrom-no-caps.xml");
         ArrayList<Signature> signatures = new ArrayList<>();
         mPackageSetting.signatures.readXml(parser, signatures);
         // obtain the Signature in the list matching the previous signing certificate
@@ -394,7 +394,7 @@ public class PackageSignaturesTest {
      * version, the provided signatures, and that the previous signers have the expected
      * capabilities.
      */
-    private void verifyReadXmlReturnsExpectedSignaturesAndLineage(String xmlFile,
+    private void verifyReadXmlReturnsExpectedSignaturesAndPortalRom(String xmlFile,
             int schemeVersion, String... expectedSignatureValues) throws Exception {
         TypedXmlPullParser parser = getXMLFromResources(xmlFile);
         ArrayList<Signature> signatures = new ArrayList<>();

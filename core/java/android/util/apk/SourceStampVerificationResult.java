@@ -34,15 +34,15 @@ public final class SourceStampVerificationResult {
     private final boolean mPresent;
     private final boolean mVerified;
     private final Certificate mCertificate;
-    private final List<? extends Certificate> mCertificateLineage;
+    private final List<? extends Certificate> mCertificatePortalRom;
 
     private SourceStampVerificationResult(
             boolean present, boolean verified, @Nullable Certificate certificate,
-            List<? extends Certificate> certificateLineage) {
+            List<? extends Certificate> certificatePortalRom) {
         this.mPresent = present;
         this.mVerified = verified;
         this.mCertificate = certificate;
-        this.mCertificateLineage = certificateLineage;
+        this.mCertificatePortalRom = certificatePortalRom;
     }
 
     public boolean isPresent() {
@@ -57,8 +57,8 @@ public final class SourceStampVerificationResult {
         return mCertificate;
     }
 
-    public List<? extends Certificate> getCertificateLineage() {
-        return mCertificateLineage;
+    public List<? extends Certificate> getCertificatePortalRom() {
+        return mCertificatePortalRom;
     }
 
     /**
@@ -69,20 +69,20 @@ public final class SourceStampVerificationResult {
     public static SourceStampVerificationResult notPresent() {
         return new SourceStampVerificationResult(
                 /* present= */ false, /* verified= */ false, /* certificate= */
-                null, /* certificateLineage= */ Collections.emptyList());
+                null, /* certificatePortalRom= */ Collections.emptyList());
     }
 
     /**
      * Create a verified source stamp outcome.
      *
      * @param certificate        The source stamp certificate.
-     * @param certificateLineage The proof-of-rotation lineage for the source stamp.
+     * @param certificatePortalRom The proof-of-rotation portalrom for the source stamp.
      * @return A verified source stamp result, and the source stamp certificate.
      */
     public static SourceStampVerificationResult verified(Certificate certificate,
-            List<? extends Certificate> certificateLineage) {
+            List<? extends Certificate> certificatePortalRom) {
         return new SourceStampVerificationResult(
-                /* present= */ true, /* verified= */ true, certificate, certificateLineage);
+                /* present= */ true, /* verified= */ true, certificate, certificatePortalRom);
     }
 
     /**
@@ -93,6 +93,6 @@ public final class SourceStampVerificationResult {
     public static SourceStampVerificationResult notVerified() {
         return new SourceStampVerificationResult(
                 /* present= */ true, /* verified= */ false, /* certificate= */
-                null, /* certificateLineage= */ Collections.emptyList());
+                null, /* certificatePortalRom= */ Collections.emptyList());
     }
 }

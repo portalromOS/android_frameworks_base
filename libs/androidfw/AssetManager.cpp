@@ -62,7 +62,7 @@ static const bool kIsDebug = false;
 static const char* kAssetsRoot = "assets";
 static const char* kAppZipName = NULL; //"classes.jar";
 static const char* kSystemAssets = "framework/framework-res.apk";
-static const char* kLineageAssets = "framework/org.portalrom.platform-res.apk";
+static const char* kPortalRomAssets = "framework/org.portalrom.platform-res.apk";
 static const char* kResourceCache = "resource-cache";
 
 static const char* kExcludeExtension = ".EXCLUDE";
@@ -375,7 +375,7 @@ bool AssetManager::addDefaultAssets()
     }
     {
        String8 path(root);
-       path.appendPath(kLineageAssets);
+       path.appendPath(kPortalRomAssets);
        success &= addAssetPath(path, NULL, false /* appAsLib */, true /* isSystemAsset */);
     }
 

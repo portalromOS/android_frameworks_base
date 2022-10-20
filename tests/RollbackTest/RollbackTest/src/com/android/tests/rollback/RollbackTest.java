@@ -1229,8 +1229,8 @@ public class RollbackTest {
     /**
      * Tests an app can be rolled back to the previous signing key.
      *
-     * <p>The rollback capability in the signing lineage allows an app to be updated to an APK
-     * signed with a previous signing key in the lineage; however this often defeats the purpose
+     * <p>The rollback capability in the signing portalrom allows an app to be updated to an APK
+     * signed with a previous signing key in the portalrom; however this often defeats the purpose
      * of key rotation as a compromised key could then be used to roll an app back to the previous
      * key. To avoid requiring the rollback capability to support app rollbacks the PackageManager
      * allows an app to be rolled back to the previous signing key if the rollback install reason

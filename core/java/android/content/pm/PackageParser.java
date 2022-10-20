@@ -6020,26 +6020,26 @@ public class PackageParser {
         }
 
         /**
-         * Merges the signing lineage of this instance with the lineage in the provided {@code
+         * Merges the signing portalrom of this instance with the portalrom in the provided {@code
          * otherSigningDetails} when one has the same or an ancestor signer of the other.
          *
-         * <p>Merging two signing lineages will result in a new {@code SigningDetails} instance
-         * containing the longest common lineage with the most restrictive capabilities. If the two
-         * lineages contain the same signers with the same capabilities then the instance on which
+         * <p>Merging two signing portalroms will result in a new {@code SigningDetails} instance
+         * containing the longest common portalrom with the most restrictive capabilities. If the two
+         * portalroms contain the same signers with the same capabilities then the instance on which
          * this was invoked is returned without any changes. Similarly if neither instance has a
-         * lineage, or if neither has the same or an ancestor signer then this instance is returned.
+         * portalrom, or if neither has the same or an ancestor signer then this instance is returned.
          *
-         * Following are some example results of this method for lineages with signers A, B, C, D:
-         * - lineage B merged with lineage A -> B returns lineage A -> B.
-         * - lineage A -> B merged with lineage B -> C returns lineage A -> B -> C
-         * - lineage A -> B with the {@code PERMISSION} capability revoked for A merged with
-         *  lineage A -> B with the {@code SHARED_USER_ID} capability revoked for A returns
-         *  lineage A -> B with both capabilities revoked for A.
-         * - lineage A -> B -> C merged with lineage A -> B -> D would return the original lineage
+         * Following are some example results of this method for portalroms with signers A, B, C, D:
+         * - portalrom B merged with portalrom A -> B returns portalrom A -> B.
+         * - portalrom A -> B merged with portalrom B -> C returns portalrom A -> B -> C
+         * - portalrom A -> B with the {@code PERMISSION} capability revoked for A merged with
+         *  portalrom A -> B with the {@code SHARED_USER_ID} capability revoked for A returns
+         *  portalrom A -> B with both capabilities revoked for A.
+         * - portalrom A -> B -> C merged with portalrom A -> B -> D would return the original portalrom
          *  A -> B -> C since the current signer of both instances is not the same or in the
-         *   lineage of the other.
+         *   portalrom of the other.
          */
-        public SigningDetails mergeLineageWith(SigningDetails otherSigningDetails) {
+        public SigningDetails mergePortalRomWith(SigningDetails otherSigningDetails) {
             if (!hasPastSigningCertificates()) {
                 return otherSigningDetails.hasPastSigningCertificates()
                         && otherSigningDetails.hasAncestorOrSelf(this) ? otherSigningDetails : this;
@@ -6048,21 +6048,21 @@ public class PackageParser {
                 return this;
             }
             // Use the utility method to determine which SigningDetails instance is the descendant
-            // and to confirm that the signing lineage does not diverge.
+            // and to confirm that the signing portalrom does not diverge.
             SigningDetails descendantSigningDetails = getDescendantOrSelf(otherSigningDetails);
             if (descendantSigningDetails == null) {
                 return this;
             }
-            return descendantSigningDetails == this ? mergeLineageWithAncestorOrSelf(
-                    otherSigningDetails) : otherSigningDetails.mergeLineageWithAncestorOrSelf(this);
+            return descendantSigningDetails == this ? mergePortalRomWithAncestorOrSelf(
+                    otherSigningDetails) : otherSigningDetails.mergePortalRomWithAncestorOrSelf(this);
         }
 
         /**
-         * Merges the signing lineage of this instance with the lineage of the ancestor (or same)
+         * Merges the signing portalrom of this instance with the portalrom of the ancestor (or same)
          * signer in the provided {@code otherSigningDetails}.
          */
-        private SigningDetails mergeLineageWithAncestorOrSelf(SigningDetails otherSigningDetails) {
-            // This method should only be called with instances that contain lineages.
+        private SigningDetails mergePortalRomWithAncestorOrSelf(SigningDetails otherSigningDetails) {
+            // This method should only be called with instances that contain portalroms.
             int index = pastSigningCertificates.length - 1;
             int otherIndex = otherSigningDetails.pastSigningCertificates.length - 1;
             if (index < 0 || otherIndex < 0) {
@@ -6071,21 +6071,21 @@ public class PackageParser {
 
             List<Signature> mergedSignatures = new ArrayList<>();
             boolean capabilitiesModified = false;
-            // If this is a descendant lineage then add all of the descendant signer(s) to the
-            // merged lineage until the ancestor signer is reached.
+            // If this is a descendant portalrom then add all of the descendant signer(s) to the
+            // merged portalrom until the ancestor signer is reached.
             while (index >= 0 && !pastSigningCertificates[index].equals(
                     otherSigningDetails.pastSigningCertificates[otherIndex])) {
                 mergedSignatures.add(new Signature(pastSigningCertificates[index--]));
             }
-            // If the signing lineage was exhausted then the provided ancestor is not actually an
-            // ancestor of this lineage.
+            // If the signing portalrom was exhausted then the provided ancestor is not actually an
+            // ancestor of this portalrom.
             if (index < 0) {
                 return this;
             }
 
             do {
-                // Add the common signer to the merged lineage with the most restrictive
-                // capabilities of the two lineages.
+                // Add the common signer to the merged portalrom with the most restrictive
+                // capabilities of the two portalroms.
                 Signature signature = pastSigningCertificates[index--];
                 Signature ancestorSignature =
                         otherSigningDetails.pastSigningCertificates[otherIndex--];
@@ -6099,14 +6099,14 @@ public class PackageParser {
             } while (index >= 0 && otherIndex >= 0 && pastSigningCertificates[index].equals(
                     otherSigningDetails.pastSigningCertificates[otherIndex]));
 
-            // If both lineages still have elements then their lineages have diverged; since this is
+            // If both portalroms still have elements then their portalroms have diverged; since this is
             // not supported return the invoking instance.
             if (index >= 0 && otherIndex >= 0) {
                 return this;
             }
 
-            // Add any remaining elements from either lineage that is not yet exhausted to the
-            // the merged lineage.
+            // Add any remaining elements from either portalrom that is not yet exhausted to the
+            // the merged portalrom.
             while (otherIndex >= 0) {
                 mergedSignatures.add(new Signature(
                         otherSigningDetails.pastSigningCertificates[otherIndex--]));
@@ -6115,20 +6115,20 @@ public class PackageParser {
                 mergedSignatures.add(new Signature(pastSigningCertificates[index--]));
             }
 
-            // if this lineage already contains all the elements in the ancestor and none of the
+            // if this portalrom already contains all the elements in the ancestor and none of the
             // capabilities were changed then just return this instance.
             if (mergedSignatures.size() == pastSigningCertificates.length
                     && !capabilitiesModified) {
                 return this;
             }
-            // Since the signatures were added to the merged lineage from newest to oldest reverse
+            // Since the signatures were added to the merged portalrom from newest to oldest reverse
             // the list to ensure the oldest signer is at index 0.
             Collections.reverse(mergedSignatures);
             try {
                 return new SigningDetails(new Signature[]{new Signature(signatures[0])},
                         signatureSchemeVersion, mergedSignatures.toArray(new Signature[0]));
             } catch (CertificateException e) {
-                Slog.e(TAG, "Caught an exception creating the merged lineage: ", e);
+                Slog.e(TAG, "Caught an exception creating the merged portalrom: ", e);
                 return this;
             }
         }
@@ -6139,23 +6139,23 @@ public class PackageParser {
          *
          * <p>The two SigningDetails have a common ancestor if any of the following conditions are
          * met:
-         * - If neither has a lineage and their current signer(s) are equal.
-         * - If only one has a lineage and the signer of the other is the same or in the lineage.
-         * - If both have a lineage and their current signers are the same or one is in the lineage
-         * of the other, and their lineages do not diverge to different signers.
+         * - If neither has a portalrom and their current signer(s) are equal.
+         * - If only one has a portalrom and the signer of the other is the same or in the portalrom.
+         * - If both have a portalrom and their current signers are the same or one is in the portalrom
+         * of the other, and their portalroms do not diverge to different signers.
          */
         public boolean hasCommonAncestor(SigningDetails otherSigningDetails) {
             if (!hasPastSigningCertificates()) {
-                // If this instance does not have a lineage then it must either be in the ancestry
+                // If this instance does not have a portalrom then it must either be in the ancestry
                 // of or the same signer of the otherSigningDetails.
                 return otherSigningDetails.hasAncestorOrSelf(this);
             }
             if (!otherSigningDetails.hasPastSigningCertificates()) {
                 return hasAncestorOrSelf(otherSigningDetails);
             }
-            // If both have a lineage then use getDescendantOrSelf to obtain the descendant signing
-            // details; a null return from that method indicates there is no common lineage between
-            // the two or that they diverge at a point in the lineage.
+            // If both have a portalrom then use getDescendantOrSelf to obtain the descendant signing
+            // details; a null return from that method indicates there is no common portalrom between
+            // the two or that they diverge at a point in the portalrom.
             return getDescendantOrSelf(otherSigningDetails) != null;
         }
 
@@ -6166,8 +6166,8 @@ public class PackageParser {
          * <p>The provided {@code certDigests} should contain the SHA-256 digest of the DER encoding
          * of each trusted certificate with the digest characters in upper case. If this instance
          * has multiple signers then all signers must be in the provided {@code Set}. If this
-         * instance has a signing lineage then this method will return true if any of the previous
-         * signers in the lineage match one of the entries in the {@code Set}.
+         * instance has a signing portalrom then this method will return true if any of the previous
+         * signers in the portalrom match one of the entries in the {@code Set}.
          */
         public boolean hasAncestorOrSelfWithDigest(Set<String> certDigests) {
             if (this == UNKNOWN || certDigests == null || certDigests.size() == 0) {
@@ -6197,7 +6197,7 @@ public class PackageParser {
             }
             if (hasPastSigningCertificates()) {
                 // The last element in the pastSigningCertificates array is the current signer;
-                // since that was verified above just check all the signers in the lineage.
+                // since that was verified above just check all the signers in the portalrom.
                 for (int i = 0; i < pastSigningCertificates.length - 1; i++) {
                     signatureDigest = PackageUtils.computeSha256Digest(
                             pastSigningCertificates[i].toByteArray());
@@ -6211,29 +6211,29 @@ public class PackageParser {
 
         /**
          * Returns the SigningDetails with a descendant (or same) signer after verifying the
-         * descendant has the same, a superset, or a subset of the lineage of the ancestor.
+         * descendant has the same, a superset, or a subset of the portalrom of the ancestor.
          *
          * <p>If this instance and the provided {@code otherSigningDetails} do not share an
-         * ancestry, or if their lineages diverge then null is returned to indicate there is no
+         * ancestry, or if their portalroms diverge then null is returned to indicate there is no
          * valid descendant SigningDetails.
          */
         private SigningDetails getDescendantOrSelf(SigningDetails otherSigningDetails) {
             SigningDetails descendantSigningDetails;
             SigningDetails ancestorSigningDetails;
             if (hasAncestorOrSelf(otherSigningDetails)) {
-                // If the otherSigningDetails has the same signer or a signer in the lineage of this
+                // If the otherSigningDetails has the same signer or a signer in the portalrom of this
                 // instance then treat this instance as the descendant.
                 descendantSigningDetails = this;
                 ancestorSigningDetails = otherSigningDetails;
             } else if (otherSigningDetails.hasAncestor(this)) {
                 // The above check confirmed that the two instances do not have the same signer and
-                // the signer of otherSigningDetails is not in this instance's lineage; if this
-                // signer is in the otherSigningDetails lineage then treat this as the ancestor.
+                // the signer of otherSigningDetails is not in this instance's portalrom; if this
+                // signer is in the otherSigningDetails portalrom then treat this as the ancestor.
                 descendantSigningDetails = otherSigningDetails;
                 ancestorSigningDetails = this;
             } else {
                 // The signers are not the same and neither has the current signer of the other in
-                // its lineage; return null to indicate there is no descendant signer.
+                // its portalrom; return null to indicate there is no descendant signer.
                 return null;
             }
             // Once the descent (or same) signer is identified iterate through the ancestry until
@@ -6245,12 +6245,12 @@ public class PackageParser {
                     ancestorSigningDetails.pastSigningCertificates[ancestorIndex])) {
                 descendantIndex--;
             }
-            // Since the ancestry was verified above the descendant lineage should never be
+            // Since the ancestry was verified above the descendant portalrom should never be
             // exhausted, but if for some reason the ancestor signer is not found then return null.
             if (descendantIndex < 0) {
                 return null;
             }
-            // Once the common ancestor (or same) signer is found iterate over the lineage of both
+            // Once the common ancestor (or same) signer is found iterate over the portalrom of both
             // to ensure that they are either the same or one is a subset of the other.
             do {
                 descendantIndex--;
@@ -6259,12 +6259,12 @@ public class PackageParser {
                     && descendantSigningDetails.pastSigningCertificates[descendantIndex].equals(
                     ancestorSigningDetails.pastSigningCertificates[ancestorIndex]));
 
-            // If both lineages still have elements then they diverge and cannot be considered a
-            // valid common lineage.
+            // If both portalroms still have elements then they diverge and cannot be considered a
+            // valid common portalrom.
             if (descendantIndex >= 0 && ancestorIndex >= 0) {
                 return null;
             }
-            // Since one or both of the lineages was exhausted they are either the same or one is a
+            // Since one or both of the portalroms was exhausted they are either the same or one is a
             // subset of the other; return the valid descendant.
             return descendantSigningDetails;
         }
@@ -6329,8 +6329,8 @@ public class PackageParser {
          * {@code otherDetails} with the specified {@code flags} capabilities provided by this
          * signer.
          *
-         * <p>Note this method allows for the signing lineage to diverge, so this should only be
-         * used for instances where the only requirement is a common signer in the lineage with
+         * <p>Note this method allows for the signing portalrom to diverge, so this should only be
+         * used for instances where the only requirement is a common signer in the portalrom with
          * the specified capabilities. If the current signer of this instance is an ancestor of
          * {@code otherDetails} then {@code true} is immediately returned since the current signer
          * has all capabilities granted.

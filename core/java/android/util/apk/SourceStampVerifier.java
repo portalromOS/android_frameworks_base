@@ -95,7 +95,7 @@ public abstract class SourceStampVerifier {
     /** Verifies SourceStamp present in a list of (split) APKs for the same app. */
     public static SourceStampVerificationResult verify(List<String> apkFiles) {
         Certificate stampCertificate = null;
-        List<? extends Certificate> stampCertificateLineage = Collections.emptyList();
+        List<? extends Certificate> stampCertificatePortalRom = Collections.emptyList();
         for (String apkFile : apkFiles) {
             SourceStampVerificationResult sourceStampVerificationResult = verify(apkFile);
             if (!sourceStampVerificationResult.isPresent()
@@ -104,14 +104,14 @@ public abstract class SourceStampVerifier {
             }
             if (stampCertificate != null
                     && (!stampCertificate.equals(sourceStampVerificationResult.getCertificate())
-                    || !stampCertificateLineage.equals(
-                            sourceStampVerificationResult.getCertificateLineage()))) {
+                    || !stampCertificatePortalRom.equals(
+                            sourceStampVerificationResult.getCertificatePortalRom()))) {
                 return SourceStampVerificationResult.notVerified();
             }
             stampCertificate = sourceStampVerificationResult.getCertificate();
-            stampCertificateLineage = sourceStampVerificationResult.getCertificateLineage();
+            stampCertificatePortalRom = sourceStampVerificationResult.getCertificatePortalRom();
         }
-        return SourceStampVerificationResult.verified(stampCertificate, stampCertificateLineage);
+        return SourceStampVerificationResult.verified(stampCertificate, stampCertificatePortalRom);
     }
 
     /** Verifies SourceStamp present in the provided APK. */
@@ -194,7 +194,7 @@ public abstract class SourceStampVerifier {
                     signatures);
         }
 
-        List<? extends Certificate> sourceStampCertificateLineage = Collections.emptyList();
+        List<? extends Certificate> sourceStampCertificatePortalRom = Collections.emptyList();
         if (sourceStampBlockData.hasRemaining()) {
             // The stamp block contains some additional attributes.
             ByteBuffer stampAttributeData = getLengthPrefixedSlice(sourceStampBlockData);
@@ -209,12 +209,12 @@ public abstract class SourceStampVerifier {
             ApkSigningBlockUtils.VerifiedProofOfRotation verifiedProofOfRotation =
                     verifySourceStampAttributes(stampAttributeData, sourceStampCertificate);
             if (verifiedProofOfRotation != null) {
-                sourceStampCertificateLineage = verifiedProofOfRotation.certs;
+                sourceStampCertificatePortalRom = verifiedProofOfRotation.certs;
             }
         }
 
         return SourceStampVerificationResult.verified(sourceStampCertificate,
-                sourceStampCertificateLineage);
+                sourceStampCertificatePortalRom);
     }
 
     /**
