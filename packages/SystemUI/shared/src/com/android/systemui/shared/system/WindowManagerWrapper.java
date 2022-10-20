@@ -40,7 +40,7 @@ import android.view.animation.Interpolator;
 import com.android.systemui.shared.recents.view.AppTransitionAnimationSpecsFuture;
 import com.android.systemui.shared.recents.view.RecentsTransition;
 
-import lineageos.providers.LineageSettings;
+import portalrom.providers.PortalRomSettings;
 
 public class WindowManagerWrapper {
 
@@ -198,8 +198,8 @@ public class WindowManagerWrapper {
      */
     public boolean hasSoftNavigationBar(Context context, int displayId) {
         if (displayId == Display.DEFAULT_DISPLAY &&
-                LineageSettings.System.getIntForUser(context.getContentResolver(),
-                        LineageSettings.System.FORCE_SHOW_NAVBAR, 0,
+                PortalRomSettings.System.getIntForUser(context.getContentResolver(),
+                        PortalRomSettings.System.FORCE_SHOW_NAVBAR, 0,
                         UserHandle.USER_CURRENT) == 1) {
             return true;
         }
