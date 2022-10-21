@@ -95,7 +95,7 @@ import com.android.systemui.tuner.TunerService;
 import com.android.wm.shell.legacysplitscreen.LegacySplitScreen;
 import com.android.wm.shell.pip.Pip;
 
-import lineageos.providers.LineageSettings;
+import portalrom.providers.PortalRomSettings;
 
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -110,7 +110,7 @@ public class NavigationBarView extends FrameLayout implements
     final static String TAG = "NavBarView";
 
     private static final String NAVIGATION_BAR_MENU_ARROW_KEYS =
-            "lineagesystem:" + LineageSettings.System.NAVIGATION_BAR_MENU_ARROW_KEYS;
+            "portalromsystem:" + PortalRomSettings.System.NAVIGATION_BAR_MENU_ARROW_KEYS;
 
     final static boolean ALTERNATE_CAR_MODE_UI = false;
     private final RegionSamplingHelper mRegionSamplingHelper;

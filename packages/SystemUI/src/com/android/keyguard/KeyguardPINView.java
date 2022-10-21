@@ -37,7 +37,7 @@ import com.android.settingslib.animation.DisappearAnimationUtils;
 import com.android.systemui.R;
 import com.android.systemui.statusbar.policy.DevicePostureController.DevicePostureInt;
 
-import lineageos.providers.LineageSettings;
+import portalrom.providers.PortalRomSettings;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -170,8 +170,8 @@ public class KeyguardPINView extends KeyguardPinBasedInputView {
                         null, mEcaView, null
                 }};
 
-        mScramblePin = LineageSettings.System.getInt(getContext().getContentResolver(),
-                LineageSettings.System.LOCKSCREEN_PIN_SCRAMBLE_LAYOUT, 0) == 1;
+        mScramblePin = PortalRomSettings.System.getInt(getContext().getContentResolver(),
+                PortalRomSettings.System.LOCKSCREEN_PIN_SCRAMBLE_LAYOUT, 0) == 1;
         if (mScramblePin) {
             Collections.shuffle(mNumbers);
             // get all children who are NumPadKeys

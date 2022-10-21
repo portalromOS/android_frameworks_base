@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 The LineageOS Project
+ * Copyright (C) 2018 The PortalRomOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,14 +27,14 @@ import com.android.systemui.statusbar.phone.StatusBarIconController;
 import com.android.systemui.statusbar.policy.Clock;
 import com.android.systemui.tuner.TunerService;
 
-import lineageos.providers.LineageSettings;
+import portalrom.providers.PortalRomSettings;
 
 public class ClockController implements TunerService.Tunable {
 
     private static final String TAG = "ClockController";
 
     private static final String CLOCK_POSITION =
-            "lineagesystem:" + LineageSettings.System.STATUS_BAR_CLOCK;
+            "portalromsystem:" + PortalRomSettings.System.STATUS_BAR_CLOCK;
 
     private static final int CLOCK_POSITION_RIGHT = 0;
     private static final int CLOCK_POSITION_CENTER = 1;

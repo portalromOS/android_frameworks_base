@@ -114,7 +114,7 @@ import com.android.systemui.util.RingerModeTracker;
 
 import com.google.android.collect.Lists;
 
-import lineageos.providers.LineageSettings;
+import portalrom.providers.PortalRomSettings;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -2124,7 +2124,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
             }
         };
         mContext.getContentResolver().registerContentObserver(
-                LineageSettings.System.getUriFor(LineageSettings.System.FINGERPRINT_WAKE_UNLOCK),
+                PortalRomSettings.System.getUriFor(PortalRomSettings.System.FINGERPRINT_WAKE_UNLOCK),
                 false, mSettingsChangeObserver, UserHandle.USER_ALL);
     }
 
@@ -2132,14 +2132,14 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
         boolean defFingerprintSettings = mContext.getResources().getBoolean(
                 com.android.systemui.R.bool.config_fingerprintWakeAndUnlock);
         if (defFingerprintSettings) {
-            mFingerprintWakeAndUnlock = LineageSettings.System.getIntForUser(
-                    mContext.getContentResolver(), LineageSettings.System.FINGERPRINT_WAKE_UNLOCK,
+            mFingerprintWakeAndUnlock = PortalRomSettings.System.getIntForUser(
+                    mContext.getContentResolver(), PortalRomSettings.System.FINGERPRINT_WAKE_UNLOCK,
                     1, UserHandle.USER_CURRENT) == 1;
         } else {
             mFingerprintWakeAndUnlock = defFingerprintSettings;
             // if its false, the device meant to be used like that, disable toggle with 2.
-            LineageSettings.System.putIntForUser(mContext.getContentResolver(),
-                    LineageSettings.System.FINGERPRINT_WAKE_UNLOCK,
+            PortalRomSettings.System.putIntForUser(mContext.getContentResolver(),
+                    PortalRomSettings.System.FINGERPRINT_WAKE_UNLOCK,
                     2, UserHandle.USER_CURRENT);
         }
     }

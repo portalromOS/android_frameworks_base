@@ -236,7 +236,7 @@ final class OverlayManagerSettings {
 
     private static boolean isImmutableFrameworkOverlay(@NonNull SettingsItem item) {
         return !item.isMutable() && ("android".equals(item.getTargetPackageName())
-               || "lineageos.platform".equals(item.getTargetPackageName()));
+               || "portalrom.platform".equals(item.getTargetPackageName()));
     }
 
     /**

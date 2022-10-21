@@ -47,7 +47,7 @@ import com.android.systemui.statusbar.policy.BrightnessMirrorController;
 import com.android.systemui.tuner.TunerService;
 import com.android.systemui.tuner.TunerService.Tunable;
 
-import lineageos.providers.LineageSettings;
+import portalrom.providers.PortalRomSettings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,9 +56,9 @@ import java.util.List;
 public class QSPanel extends LinearLayout implements Tunable {
 
     public static final String QS_SHOW_AUTO_BRIGHTNESS =
-            "lineagesecure:" + LineageSettings.Secure.QS_SHOW_AUTO_BRIGHTNESS;
+            "portalromsecure:" + PortalRomSettings.Secure.QS_SHOW_AUTO_BRIGHTNESS;
     public static final String QS_SHOW_BRIGHTNESS_SLIDER =
-            "lineagesecure:" + LineageSettings.Secure.QS_SHOW_BRIGHTNESS_SLIDER;
+            "portalromsecure:" + PortalRomSettings.Secure.QS_SHOW_BRIGHTNESS_SLIDER;
 
     public static final String QS_SHOW_BRIGHTNESS = "qs_show_brightness";
     public static final String QS_SHOW_HEADER = "qs_show_header";

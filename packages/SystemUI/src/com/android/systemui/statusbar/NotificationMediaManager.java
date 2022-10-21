@@ -77,7 +77,7 @@ import com.android.systemui.tuner.TunerService;
 import com.android.systemui.util.Utils;
 import com.android.systemui.util.concurrency.DelayableExecutor;
 
-import lineageos.providers.LineageSettings;
+import portalrom.providers.PortalRomSettings;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -100,7 +100,7 @@ public class NotificationMediaManager implements Dumpable, TunerService.Tunable 
     public static final boolean DEBUG_MEDIA = false;
 
     private static final String LOCKSCREEN_MEDIA_METADATA =
-            "lineagesecure:" + LineageSettings.Secure.LOCKSCREEN_MEDIA_METADATA;
+            "portalromsecure:" + PortalRomSettings.Secure.LOCKSCREEN_MEDIA_METADATA;
 
     private final StatusBarStateController mStatusBarStateController
             = Dependency.get(StatusBarStateController.class);

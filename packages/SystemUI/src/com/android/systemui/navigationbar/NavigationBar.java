@@ -1314,7 +1314,7 @@ public class NavigationBar implements View.OnAttachStateChangeListener,
                         stopLockTaskMode = true;
                         return true;
                     } else if (v.getId() == R.id.recent_apps) {
-                        // Send long press key event so that Lineage button handling can intercept
+                        // Send long press key event so that PortalRom button handling can intercept
                         KeyButtonView keyButtonView = (KeyButtonView) v;
                         keyButtonView.sendEvent(KeyEvent.ACTION_DOWN, KeyEvent.FLAG_LONG_PRESS);
                         keyButtonView.sendAccessibilityEvent(

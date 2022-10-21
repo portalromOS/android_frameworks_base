@@ -37,7 +37,7 @@ import com.android.systemui.statusbar.phone.NotificationPanelViewController;
 import com.android.systemui.statusbar.phone.NotificationShadeWindowView;
 import com.android.systemui.tuner.TunerService;
 
-import lineageos.providers.LineageSettings;
+import portalrom.providers.PortalRomSettings;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -49,7 +49,7 @@ public class BrightnessMirrorController
         implements CallbackController<BrightnessMirrorController.BrightnessMirrorListener> {
 
     private static final String QS_SHOW_AUTO_BRIGHTNESS =
-            "lineagesecure:" + LineageSettings.Secure.QS_SHOW_AUTO_BRIGHTNESS;
+            "portalromsecure:" + PortalRomSettings.Secure.QS_SHOW_AUTO_BRIGHTNESS;
 
     private final NotificationShadeWindowView mStatusBarWindow;
     private final Consumer<Boolean> mVisibilityCallback;

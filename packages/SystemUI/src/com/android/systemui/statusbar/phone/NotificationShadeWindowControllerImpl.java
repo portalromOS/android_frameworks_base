@@ -58,7 +58,7 @@ import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.statusbar.policy.ConfigurationController.ConfigurationListener;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
 
-import lineageos.providers.LineageSettings;
+import portalrom.providers.PortalRomSettings;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -213,8 +213,8 @@ public class NotificationShadeWindowControllerImpl implements NotificationShadeW
                 Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.ACCELEROMETER_ROTATION, 0) != 0;
         boolean enableLockScreenRotation =
-                LineageSettings.System.getInt(mContext.getContentResolver(),
-                LineageSettings.System.LOCKSCREEN_ROTATION, 0) != 0;
+                PortalRomSettings.System.getInt(mContext.getContentResolver(),
+                PortalRomSettings.System.LOCKSCREEN_ROTATION, 0) != 0;
         return mKeyguardStateController.isKeyguardScreenRotationAllowed()
                 && (enableLockScreenRotation && enableAccelerometerRotation);
     }
@@ -893,7 +893,7 @@ public class NotificationShadeWindowControllerImpl implements NotificationShadeW
                     Settings.System.getUriFor(Settings.System.ACCELEROMETER_ROTATION),
                     false, this);
             context.getContentResolver().registerContentObserver(
-                    LineageSettings.System.getUriFor(LineageSettings.System.LOCKSCREEN_ROTATION),
+                    PortalRomSettings.System.getUriFor(PortalRomSettings.System.LOCKSCREEN_ROTATION),
                     false, this);
         }
 

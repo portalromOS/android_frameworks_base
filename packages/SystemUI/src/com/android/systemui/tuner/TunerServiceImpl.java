@@ -48,7 +48,7 @@ import com.android.systemui.statusbar.phone.StatusBarIconController;
 import com.android.systemui.statusbar.phone.SystemUIDialog;
 import com.android.systemui.util.leak.LeakDetector;
 
-import lineageos.providers.LineageSettings;
+import portalrom.providers.PortalRomSettings;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -165,20 +165,20 @@ public class TunerServiceImpl extends TunerService {
         setValue(TUNER_VERSION, newVersion);
     }
 
-    private boolean isLineageSetting(String key) {
-        return isLineageGlobal(key) || isLineageSystem(key) || isLineageSecure(key);
+    private boolean isPortalRomSetting(String key) {
+        return isPortalRomGlobal(key) || isPortalRomSystem(key) || isPortalRomSecure(key);
     }
 
-    private boolean isLineageGlobal(String key) {
-        return key.startsWith("lineageglobal:");
+    private boolean isPortalRomGlobal(String key) {
+        return key.startsWith("portalromglobal:");
     }
 
-    private boolean isLineageSystem(String key) {
-        return key.startsWith("lineagesystem:");
+    private boolean isPortalRomSystem(String key) {
+        return key.startsWith("portalromsystem:");
     }
 
-    private boolean isLineageSecure(String key) {
-        return key.startsWith("lineagesecure:");
+    private boolean isPortalRomSecure(String key) {
+        return key.startsWith("portalromsecure:");
     }
 
     private boolean isSystem(String key) {
@@ -186,18 +186,18 @@ public class TunerServiceImpl extends TunerService {
     }
 
     private String chomp(String key) {
-        return key.replaceFirst("^(lineageglobal|lineagesecure|lineagesystem|system):", "");
+        return key.replaceFirst("^(portalromglobal|portalromsecure|portalromsystem|system):", "");
     }
 
     @Override
     public String getValue(String setting) {
-        if (isLineageGlobal(setting)) {
-            return LineageSettings.Global.getString(mContentResolver, chomp(setting));
-        } else if (isLineageSecure(setting)) {
-            return LineageSettings.Secure.getStringForUser(
+        if (isPortalRomGlobal(setting)) {
+            return PortalRomSettings.Global.getString(mContentResolver, chomp(setting));
+        } else if (isPortalRomSecure(setting)) {
+            return PortalRomSettings.Secure.getStringForUser(
                     mContentResolver, chomp(setting), mCurrentUser);
-        } else if (isLineageSystem(setting)) {
-            return LineageSettings.System.getStringForUser(
+        } else if (isPortalRomSystem(setting)) {
+            return PortalRomSettings.System.getStringForUser(
                     mContentResolver, chomp(setting), mCurrentUser);
         } else if (isSystem(setting)) {
             return Settings.System.getStringForUser(
@@ -209,13 +209,13 @@ public class TunerServiceImpl extends TunerService {
 
     @Override
     public void setValue(String setting, String value) {
-        if (isLineageGlobal(setting)) {
-            LineageSettings.Global.putString(mContentResolver, chomp(setting), value);
-        } else if (isLineageSecure(setting)) {
-            LineageSettings.Secure.putStringForUser(
+        if (isPortalRomGlobal(setting)) {
+            PortalRomSettings.Global.putString(mContentResolver, chomp(setting), value);
+        } else if (isPortalRomSecure(setting)) {
+            PortalRomSettings.Secure.putStringForUser(
                     mContentResolver, chomp(setting), value, mCurrentUser);
-        } else if (isLineageSystem(setting)) {
-            LineageSettings.System.putStringForUser(
+        } else if (isPortalRomSystem(setting)) {
+            PortalRomSettings.System.putStringForUser(
                     mContentResolver, chomp(setting), value, mCurrentUser);
         } else if (isSystem(setting)) {
             Settings.System.putStringForUser(
@@ -227,13 +227,13 @@ public class TunerServiceImpl extends TunerService {
 
     @Override
     public int getValue(String setting, int def) {
-        if (isLineageGlobal(setting)) {
-            return LineageSettings.Global.getInt(mContentResolver, chomp(setting), def);
-        } else if (isLineageSecure(setting)) {
-            return LineageSettings.Secure.getIntForUser(
+        if (isPortalRomGlobal(setting)) {
+            return PortalRomSettings.Global.getInt(mContentResolver, chomp(setting), def);
+        } else if (isPortalRomSecure(setting)) {
+            return PortalRomSettings.Secure.getIntForUser(
                     mContentResolver, chomp(setting), def, mCurrentUser);
-        } else if (isLineageSystem(setting)) {
-            return LineageSettings.System.getIntForUser(
+        } else if (isPortalRomSystem(setting)) {
+            return PortalRomSettings.System.getIntForUser(
                     mContentResolver, chomp(setting), def, mCurrentUser);
         } else if (isSystem(setting)) {
             return Settings.System.getIntForUser(
@@ -246,13 +246,13 @@ public class TunerServiceImpl extends TunerService {
     @Override
     public String getValue(String setting, String def) {
         String ret;
-        if (isLineageGlobal(setting)) {
-            ret = LineageSettings.Global.getString(mContentResolver, chomp(setting));
-        } else if (isLineageSecure(setting)) {
-            ret = LineageSettings.Secure.getStringForUser(
+        if (isPortalRomGlobal(setting)) {
+            ret = PortalRomSettings.Global.getString(mContentResolver, chomp(setting));
+        } else if (isPortalRomSecure(setting)) {
+            ret = PortalRomSettings.Secure.getStringForUser(
                     mContentResolver, chomp(setting), mCurrentUser);
-        } else if (isLineageSystem(setting)) {
-            ret = LineageSettings.System.getStringForUser(
+        } else if (isPortalRomSystem(setting)) {
+            ret = PortalRomSettings.System.getStringForUser(
                     mContentResolver, chomp(setting), mCurrentUser);
         } else if (isSystem(setting)) {
             ret = Settings.System.getStringForUser(
@@ -266,13 +266,13 @@ public class TunerServiceImpl extends TunerService {
 
     @Override
     public void setValue(String setting, int value) {
-        if (isLineageGlobal(setting)) {
-            LineageSettings.Global.putInt(mContentResolver, chomp(setting), value);
-        } else if (isLineageSecure(setting)) {
-            LineageSettings.Secure.putIntForUser(
+        if (isPortalRomGlobal(setting)) {
+            PortalRomSettings.Global.putInt(mContentResolver, chomp(setting), value);
+        } else if (isPortalRomSecure(setting)) {
+            PortalRomSettings.Secure.putIntForUser(
                     mContentResolver, chomp(setting), value, mCurrentUser);
-        } else if (isLineageSystem(setting)) {
-            LineageSettings.System.putIntForUser(
+        } else if (isPortalRomSystem(setting)) {
+            PortalRomSettings.System.putIntForUser(
                     mContentResolver, chomp(setting), value, mCurrentUser);
         } else if (isSystem(setting)) {
             Settings.System.putIntForUser(mContentResolver, chomp(setting), value, mCurrentUser);
@@ -298,12 +298,12 @@ public class TunerServiceImpl extends TunerService {
             mLeakDetector.trackCollection(mTunables, "TunerService.mTunables");
         }
         final Uri uri;
-        if (isLineageGlobal(key)) {
-            uri = LineageSettings.Global.getUriFor(chomp(key));
-        } else if (isLineageSecure(key)) {
-            uri = LineageSettings.Secure.getUriFor(chomp(key));
-        } else if (isLineageSystem(key)) {
-            uri = LineageSettings.System.getUriFor(chomp(key));
+        if (isPortalRomGlobal(key)) {
+            uri = PortalRomSettings.Global.getUriFor(chomp(key));
+        } else if (isPortalRomSecure(key)) {
+            uri = PortalRomSettings.Secure.getUriFor(chomp(key));
+        } else if (isPortalRomSystem(key)) {
+            uri = PortalRomSettings.System.getUriFor(chomp(key));
         } else if (isSystem(key)) {
             uri = Settings.System.getUriFor(chomp(key));
         } else {
@@ -312,7 +312,7 @@ public class TunerServiceImpl extends TunerService {
         if (!mListeningUris.containsKey(uri)) {
             mListeningUris.put(uri, key);
             mContentResolver.registerContentObserver(uri, false, mObserver,
-                    isLineageGlobal(key) ? UserHandle.USER_ALL : mCurrentUser);
+                    isPortalRomGlobal(key) ? UserHandle.USER_ALL : mCurrentUser);
         }
         // Send the first state.
         String value = DejankUtils.whitelistIpcs(() -> getValue(key));
@@ -337,7 +337,7 @@ public class TunerServiceImpl extends TunerService {
         for (Uri uri : mListeningUris.keySet()) {
             String key = mListeningUris.get(uri);
             mContentResolver.registerContentObserver(uri, false, mObserver,
-                    isLineageGlobal(key) ? UserHandle.USER_ALL : mCurrentUser);
+                    isPortalRomGlobal(key) ? UserHandle.USER_ALL : mCurrentUser);
         }
     }
 
@@ -374,7 +374,7 @@ public class TunerServiceImpl extends TunerService {
 
         // A couple special cases.
         for (String key : mTunableLookup.keySet()) {
-            if (ArrayUtils.contains(RESET_EXCEPTION_LIST, key) || isLineageSetting(key)) {
+            if (ArrayUtils.contains(RESET_EXCEPTION_LIST, key) || isPortalRomSetting(key)) {
                 continue;
             }
             setValue(key, null);
@@ -431,7 +431,7 @@ public class TunerServiceImpl extends TunerService {
                 int flags, int userId) {
             for (Uri u : uris) {
                 String key = mListeningUris.get(u);
-                if (userId == mUserTracker.getUserId() || isLineageGlobal(key)) {
+                if (userId == mUserTracker.getUserId() || isPortalRomGlobal(key)) {
                     reloadSetting(u);
                 }
             }

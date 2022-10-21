@@ -58,7 +58,7 @@ import com.android.systemui.statusbar.policy.ConfigurationController.Configurati
 import com.android.systemui.tuner.TunerService;
 import com.android.systemui.tuner.TunerService.Tunable;
 
-import lineageos.providers.LineageSettings;
+import portalrom.providers.PortalRomSettings;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -76,9 +76,9 @@ public class Clock extends TextView implements
 
     public static final String CLOCK_SECONDS = "clock_seconds";
     private static final String CLOCK_STYLE =
-            "lineagesystem:" + LineageSettings.System.STATUS_BAR_AM_PM;
+            "portalromsystem:" + PortalRomSettings.System.STATUS_BAR_AM_PM;
     private static final String CLOCK_AUTO_HIDE =
-            "lineagesystem:" + LineageSettings.System.STATUS_BAR_CLOCK_AUTO_HIDE;
+            "portalromsystem:" + PortalRomSettings.System.STATUS_BAR_CLOCK_AUTO_HIDE;
     private static final String CLOCK_SUPER_PARCELABLE = "clock_super_parcelable";
     private static final String CURRENT_USER_ID = "current_user_id";
     private static final String VISIBLE_BY_POLICY = "visible_by_policy";

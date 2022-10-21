@@ -193,7 +193,7 @@ import com.android.systemui.util.settings.SecureSettings;
 import com.android.systemui.wallet.controller.QuickAccessWalletController;
 import com.android.wm.shell.animation.FlingAnimationUtils;
 
-import lineageos.providers.LineageSettings;
+import portalrom.providers.PortalRomSettings;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -282,9 +282,9 @@ public class NotificationPanelViewController extends PanelViewController {
     private static final String COUNTER_PANEL_OPEN_PEEK = "panel_open_peek";
 
     private static final String STATUS_BAR_QUICK_QS_PULLDOWN =
-            "lineagesystem:" + LineageSettings.System.STATUS_BAR_QUICK_QS_PULLDOWN;
+            "portalromsystem:" + PortalRomSettings.System.STATUS_BAR_QUICK_QS_PULLDOWN;
     private static final String DOUBLE_TAP_SLEEP_GESTURE =
-            "lineagesystem:" + LineageSettings.System.DOUBLE_TAP_SLEEP_GESTURE;
+            "portalromsystem:" + PortalRomSettings.System.DOUBLE_TAP_SLEEP_GESTURE;
 
     private static final Rect M_DUMMY_DIRTY_RECT = new Rect(0, 0, 1, 1);
     private static final Rect EMPTY_RECT = new Rect();

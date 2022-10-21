@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2015 The CyanogenMod Project
- *               2017-2019 The LineageOS Project
+ *               2017-2019 The PortalRomOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ import com.android.internal.graphics.palette.Palette.Swatch;
 import com.android.systemui.Dependency;
 import com.android.systemui.tuner.TunerService;
 
-import lineageos.providers.LineageSettings;
+import portalrom.providers.PortalRomSettings;
 
 public class VisualizerView extends View
         implements Palette.PaletteAsyncListener, TunerService.Tunable {
@@ -44,7 +44,7 @@ public class VisualizerView extends View
     private static final boolean DEBUG = false;
 
     private static final String LOCKSCREEN_VISUALIZER_ENABLED =
-            "lineagesecure:" + LineageSettings.Secure.LOCKSCREEN_VISUALIZER_ENABLED;
+            "portalromsecure:" + PortalRomSettings.Secure.LOCKSCREEN_VISUALIZER_ENABLED;
 
     private Paint mPaint;
     private Visualizer mVisualizer;
